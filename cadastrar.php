@@ -317,12 +317,18 @@
 			<div class="mb-3">
 				<input type="password" class="form-control mt-3" name="senha" placeholder ="Senha">
 			</div>
-			<div class="mb-3">
-				<input type="password" class="form-control mt-3" name="csenha" placeholder ="Confirmar senha">
-			</div>
-			<div class="mb-3">
-				<input type="submit" class="btn btn-dark col-12" value="Enviar">
-			</div>
+<div class="mb-3">
+	<input type="password" class="form-control mt-3" name="csenha" placeholder ="Confirmar senha">
+</div>
+<div class="mb-3">
+	<select class="form-control mt-3" name="tipo">
+		<option value="cliente">Cliente</option>
+		<option value="admin">Administrador</option>
+	</select>
+</div>
+<div class="mb-3">
+	<input type="submit" class="btn btn-dark col-12" value="Enviar">
+</div>
 		   <div class="text-center mb-5">
 			   <a href="index.html" style="text-decoration: none; color: black">Retornar à loja</a>
 		   </div>
@@ -338,20 +344,26 @@
 			   $senha    = $_POST['senha'];
 			   $csenha   = $_POST['csenha'];
 
-			   if($senha == $csenha){
-				   include_once('conexao.php');
-				   $sql = "INSERT INTO usuario(nome, cpf, telefone, email, senha) VALUES('{$nome}', '{$cpf}', '{$telefone}', '{$email}', '{$senha}')";
-				   $conexao->query($sql);
-				   echo("Usuário cadastrado com sucesso!");
-			   }
-			   else{
-				   echo("Senhas não conferem!");
-			   }
+	   if($senha == $csenha){
+		   include_once('conexao.php');
+		   $tipo = $_POST['tipo'] ?? 'cliente';
+		   if ($tipo === 'admin') {
+			   $sql = "INSERT INTO administrador(nome, email, senha) VALUES('{$nome}', '{$email}', '{$senha}')";
+		   } else {
+			   $sql = "INSERT INTO usuario(nome, cpf, telefone, email, senha) VALUES('{$nome}', '{$cpf}', '{$telefone}', '{$email}', '{$senha}')";
+		   }
+		   $conexao->query($sql);
+		   echo('<div class="text-center mt-3 mb-3"><span class="text-success">Usuário cadastrado com sucesso!</span></div>');
+	   }
+	   else{
+		   echo('<div class="text-center mt-3 mb-3"><span class="text-danger">Senhas não conferem!</span></div>');
+	   }
 		   }
 		
 
 		?>
 	</div>
+
 
 
 

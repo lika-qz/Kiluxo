@@ -156,21 +156,53 @@
 			</ul>
 		</div>
 
-		<!-- Modal Search -->
-		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-			<div class="container-search-header">
-				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-					<img src="images/icons/icon-close2.png" alt="CLOSE">
-				</button>
+<!-- Modal Search -->
+<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="display: none;">
+	<div class="container-search-header">
+		<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+			<img src="images/icons/icon-close2.png" alt="CLOSE">
+		</button>
 
-				<form class="wrap-search-header flex-w p-l-15">
-					<button class="flex-c-m trans-04">
-						<i class="zmdi zmdi-search"></i>
-					</button>
-					<input class="plh3" type="text" name="search" placeholder="Search...">
-				</form>
-			</div>
-		</div>
+		<form class="wrap-search-header flex-w p-l-15">
+			<button class="flex-c-m trans-04" type="submit">
+				<i class="zmdi zmdi-search"></i>
+			</button>
+			<input class="plh3" type="text" name="search" placeholder="Search...">
+		</form>
+	</div>
+</div>
+
+<script>
+// Garante que o modal de busca só aparece ao clicar no ícone de busca
+document.addEventListener('DOMContentLoaded', function() {
+	var modal = document.querySelector('.modal-search-header');
+	var showBtns = document.querySelectorAll('.js-show-modal-search');
+	var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
+
+	showBtns.forEach(function(btn) {
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			modal.style.display = 'flex';
+			var input = modal.querySelector('input');
+			if(input) input.focus();
+		});
+	});
+
+	hideBtns.forEach(function(btn) {
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			modal.style.display = 'none';
+		});
+	});
+
+	// Fecha o modal ao clicar fora do container
+	modal.addEventListener('click', function(e) {
+		if (e.target === modal) {
+			modal.style.display = 'none';
+		}
+	});
+});
+</script>
 	</header>
 
 	<!-- Sidebar -->

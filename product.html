@@ -155,21 +155,53 @@
 			</ul>
 		</div>
 
-		<!-- Modal Search -->
-		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-			<div class="container-search-header">
-				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-					<img src="images/icons/icon-close2.png" alt="CLOSE">
-				</button>
+<!-- Modal Search -->
+<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="display: none;">
+	<div class="container-search-header">
+		<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+			<img src="images/icons/icon-close2.png" alt="CLOSE">
+		</button>
 
-				<form class="wrap-search-header flex-w p-l-15">
-					<button class="flex-c-m trans-04">
-						<i class="zmdi zmdi-search"></i>
-					</button>
-					<input class="plh3" type="text" name="search" placeholder="Search...">
-				</form>
-			</div>
-		</div>
+		<form class="wrap-search-header flex-w p-l-15">
+			<button class="flex-c-m trans-04" type="submit">
+				<i class="zmdi zmdi-search"></i>
+			</button>
+			<input class="plh3" type="text" name="search" placeholder="Search...">
+		</form>
+	</div>
+</div>
+
+<script>
+// Garante que o modal de busca só aparece ao clicar no ícone de busca
+document.addEventListener('DOMContentLoaded', function() {
+	var modal = document.querySelector('.modal-search-header');
+	var showBtns = document.querySelectorAll('.js-show-modal-search');
+	var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
+
+	showBtns.forEach(function(btn) {
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			modal.style.display = 'flex';
+			var input = modal.querySelector('input');
+			if(input) input.focus();
+		});
+	});
+
+	hideBtns.forEach(function(btn) {
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			modal.style.display = 'none';
+		});
+	});
+
+	// Fecha o modal ao clicar fora do container
+	modal.addEventListener('click', function(e) {
+		if (e.target === modal) {
+			modal.style.display = 'none';
+		}
+	});
+});
+</script>
 	</header>
 
 	<!-- Sidebar -->
@@ -636,6 +668,15 @@
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Vizualizar
 							</a>
+							<form action="adicionar_carrinho.php" method="post" style="margin-top:8px;">
+								<input type="hidden" name="nome" value="Camisa Esprit com babados">
+								<input type="hidden" name="preco" value="16.64">
+								<input type="hidden" name="imagem" value="images/product-01.jpg">
+								<input type="hidden" name="descricao" value="Camisa Esprit com babados, confortável e estilosa.">
+								<input type="hidden" name="quantidade" value="1">
+								<button type="submit" class="btn btn-sm btn-success">Adicionar ao carrinho</button>
+							</form>
+							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
@@ -667,6 +708,15 @@
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Vizualizar
+							</a>
+							<form action="adicionar_carrinho.php" method="post" style="margin-top:8px;">
+								<input type="hidden" name="nome" value="Camisa Social Branca">
+								<input type="hidden" name="preco" value="35.31">
+								<input type="hidden" name="imagem" value="images/product-02.jpg">
+								<input type="hidden" name="descricao" value="Camisa social branca, ideal para ocasiões formais.">
+								<input type="hidden" name="quantidade" value="1">
+								<button type="submit" class="btn btn-sm btn-success">Adicionar ao carrinho</button>
+							</form>
 							</a>
 						</div>
 
@@ -700,6 +750,15 @@
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Vizualizar
 							</a>
+							<form action="adicionar_carrinho.php" method="post" style="margin-top:8px;">
+								<input type="hidden" name="nome" value="Camisa Social Quadriculada">
+								<input type="hidden" name="preco" value="25.50">
+								<input type="hidden" name="imagem" value="images/product-03.jpg">
+								<input type="hidden" name="descricao" value="Camisa social quadriculada, moderna e versátil.">
+								<input type="hidden" name="quantidade" value="1">
+								<button type="submit" class="btn btn-sm btn-success">Adicionar ao carrinho</button>
+							</form>
+							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
@@ -732,6 +791,15 @@
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Visualizar
 							</a>
+							<form action="adicionar_carrinho.php" method="post" style="margin-top:8px;">
+								<input type="hidden" name="nome" value="Casaco Coach Clássico">
+								<input type="hidden" name="preco" value="75.00">
+								<input type="hidden" name="imagem" value="images/product-04.jpg">
+								<input type="hidden" name="descricao" value="Casaco Coach clássico, elegante para o inverno.">
+								<input type="hidden" name="quantidade" value="1">
+								<button type="submit" class="btn btn-sm btn-success">Adicionar ao carrinho</button>
+							</form>
+							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
@@ -763,6 +831,15 @@
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Vizualizar
+							</a>
+							<form action="adicionar_carrinho.php" method="post" style="margin-top:8px;">
+								<input type="hidden" name="nome" value="Camisa Padrão Piquet">
+								<input type="hidden" name="preco" value="49.90">
+								<input type="hidden" name="imagem" value="images/product-05.jpg">
+								<input type="hidden" name="descricao" value="Camisa padrão piquet, ótima para o dia a dia.">
+								<input type="hidden" name="quantidade" value="1">
+								<button type="submit" class="btn btn-sm btn-success">Adicionar ao carrinho</button>
+							</form>
 							</a>
 						</div>
 
@@ -1482,20 +1559,20 @@
 <!--===============================================================================================-->
 	<script src="vendor/parallax100/parallax100.js"></script>
 	<script>
-        $('.parallax100').parallax100();
+		$('.parallax100').parallax100();
 	</script>
 <!--===============================================================================================-->
 	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 	<script>
 		$('.gallery-lb').each(function() { // the containers for all your galleries
 			$(this).magnificPopup({
-		        delegate: 'a', // the selector for gallery item
-		        type: 'image',
-		        gallery: {
-		        	enabled:true
-		        },
-		        mainClass: 'mfp-fade'
-		    });
+				delegate: 'a', // the selector for gallery item
+				type: 'image',
+				gallery: {
+					enabled:true
+				},
+				mainClass: 'mfp-fade'
+			});
 		});
 	</script>
 <!--===============================================================================================-->

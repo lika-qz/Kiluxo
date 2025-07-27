@@ -164,13 +164,45 @@
 				</button>
 
 				<form class="wrap-search-header flex-w p-l-15">
-					<button class="flex-c-m trans-04">
+					<button class="flex-c-m trans-04" type="submit">
 						<i class="zmdi zmdi-search"></i>
 					</button>
-					<input class="plh3" type="text" name="search" placeholder="Pesquisar...">
+					<input class="plh3" type="text" name="search" placeholder="Search...">
 				</form>
 			</div>
 		</div>
+
+		<script>
+		// Garante que o modal de busca só aparece ao clicar no ícone de busca
+		document.addEventListener('DOMContentLoaded', function() {
+			var modal = document.querySelector('.modal-search-header');
+			var showBtns = document.querySelectorAll('.js-show-modal-search');
+			var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
+
+			showBtns.forEach(function(btn) {
+				btn.addEventListener('click', function(e) {
+					e.preventDefault();
+					modal.style.display = 'flex';
+					var input = modal.querySelector('input');
+					if(input) input.focus();
+				});
+			});
+
+			hideBtns.forEach(function(btn) {
+				btn.addEventListener('click', function(e) {
+					e.preventDefault();
+					modal.style.display = 'none';
+				});
+			});
+
+			// Fecha o modal ao clicar fora do container
+			modal.addEventListener('click', function(e) {
+				if (e.target === modal) {
+					modal.style.display = 'none';
+				}
+			});
+		});
+		</script>
 	</header>
 
 	<!-- Cart -->
@@ -754,7 +786,7 @@
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-                 Dúvidas? Entre em contato conosco na loja, localizada na Rua da Padre Victor, 680, Tauá Mirim, ou ligue para (97) 98402-9004.					</p>
+				 Dúvidas? Entre em contato conosco na loja, localizada na Rua da Padre Victor, 680, Tauá Mirim, ou ligue para (97) 98402-9004.					</p>
 
 					<div class="p-t-27">
 						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
