@@ -32,50 +32,48 @@ if (isset($_GET['id'])) {
 } else {
 	die("<h2>ID do produto não foi fornecido.</h2>");
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 	$id = (int) $_POST['id'];
+	$nome = $_POST['nome'] ?? '';
+	$preco = (float) $_POST['preco'] ?? 0;
+	$imagem = $_POST['imagem'] ?? '';
+	$descricao = $_POST['descricao'] ?? '';
+	$quantidade = (int) ($_POST['quantidade'] ?? 1);
+	$tamanho = $_POST['tamanho'] ?? '';
+	$cor = $_POST['cor'] ?? '';
 
-	// Certifique-se de que os dados obrigatórios estão presentes
-	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-		$id = (int) $_POST['id'];
-
-		// Adiciona validação mais rígida
-		if (
-			!empty($_POST['nome']) &&
-			!empty($_POST['preco']) &&
-			!empty($_POST['imagem']) &&
-			!empty($_POST['descricao'])
-		) {
-			if (!isset($_SESSION['carrinho'])) {
-				$_SESSION['carrinho'] = [];
-			}
-
-			if (isset($_SESSION['carrinho'][$id])) {
-				$_SESSION['carrinho'][$id]['quantidade'] += 1;
-			} else {
-				$_SESSION['carrinho'][$id] = [
-					'nome' => $_POST['nome'],
-					'preco' => (float) $_POST['preco'],
-					'imagem' => $_POST['imagem'],
-					'descricao' => $_POST['descricao'],
-					'quantidade' => 1
-				];
-			}
-		} else {
-			// Log de depuração opcional
-			error_log("Tentativa de adicionar item incompleto ao carrinho: " . print_r($_POST, true));
+	// Validação básica
+	if ($id && $nome && $preco && $imagem && $descricao) {
+		if (!isset($_SESSION['carrinho'])) {
+			$_SESSION['carrinho'] = [];
 		}
+
+		// Usar o ID como chave ou adicionar como item novo
+		if (isset($_SESSION['carrinho'][$id])) {
+			// Atualiza quantidade se já existir
+			$_SESSION['carrinho'][$id]['quantidade'] += $quantidade;
+		} else {
+			$_SESSION['carrinho'][$id] = [
+				'id' => $id,
+				'nome' => $nome,
+				'preco' => $preco,
+				'imagem' => $imagem,
+				'descricao' => $descricao,
+				'quantidade' => $quantidade,
+				'tamanho' => $tamanho,
+				'cor' => $cor
+			];
+		}
+
+		// Redireciona para o carrinho após adicionar
+		header('Location: shoping-cart.php');
+		exit;
+
+	} else {
+		error_log("Dados inválidos recebidos: " . print_r($_POST, true));
 	}
 }
 
-// Calcular total de itens no carrinho
-$totalItensCarrinho = 0;
-if (isset($_SESSION['carrinho'])) {
-	foreach ($_SESSION['carrinho'] as $item) {
-		$totalItensCarrinho += $item['quantidade'];
-	}
-}
 ?>
 
 <!DOCTYPE html>
@@ -474,7 +472,7 @@ if (isset($_SESSION['carrinho'])) {
 					];
 					?>
 
-					<form action="adicionar_carrinho.php" method="post" class="mt-4">
+					<form action="" method="post" class="mt-4">
 						<input type="hidden" name="id" value="<?= $produtoSelecionado['id'] ?>">
 						<input type="hidden" name="nome" value="<?= $produtoSelecionado['nome'] ?>">
 						<input type="hidden" name="preco" value="<?= $produtoSelecionado['preco'] ?>">
@@ -532,10 +530,11 @@ if (isset($_SESSION['carrinho'])) {
 						</div>
 
 
-						<!-- Botão -->
 						<button type="submit" class="btn btn-success btn-lg mt-3">
 							<i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho
 						</button>
+
+
 					</form>
 				</div>
 			</div>

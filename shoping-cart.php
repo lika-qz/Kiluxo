@@ -1,18 +1,79 @@
+<?php
+session_start();
+require_once 'listaProdutos.php';
+
+// Inicializa o carrinho se não existir
+if (!isset($_SESSION['carrinho'])) {
+	$_SESSION['carrinho'] = [];
+}
+
+// Se for um POST com um produto sendo adicionado
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+	$id = (int) $_POST['id'];
+	$nome = $_POST['nome'] ?? '';
+	$preco = (float) $_POST['preco'] ?? 0;
+	$imagem = $_POST['imagem'] ?? '';
+	$descricao = $_POST['descricao'] ?? '';
+	$quantidade = (int) ($_POST['quantidade'] ?? 1);
+	$tamanho = $_POST['tamanho'] ?? '';
+	$cor = $_POST['cor'] ?? '';
+
+	// Validação básica
+	if ($id && $nome && $preco && $imagem && $descricao) {
+		if (!isset($_SESSION['carrinho'])) {
+			$_SESSION['carrinho'] = [];
+		}
+
+		// Cria uma chave única considerando tamanho e cor
+		$chave = $id . '-' . $tamanho . '-' . $cor;
+
+		if (isset($_SESSION['carrinho'][$chave])) {
+			$_SESSION['carrinho'][$chave]['quantidade'] += $quantidade;
+		} else {
+			$_SESSION['carrinho'][$chave] = [
+				'id' => $id,
+				'nome' => $nome,
+				'preco' => $preco,
+				'imagem' => $imagem,
+				'descricao' => $descricao,
+				'quantidade' => $quantidade,
+				'tamanho' => $tamanho,
+				'cor' => $cor
+			];
+		}
+
+		header('Location: carrinho.php');
+		exit;
+	} else {
+		error_log("Dados inválidos recebidos: " . print_r($_POST, true));
+	}
+}
+
+
+// Calcula o total do carrinho
+$total = 0;
+foreach ($_SESSION['carrinho'] as $item) {
+	$total += $item['preco'] * $item['quantidade'];
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 	<title>Kiluxo | Moda Virtual</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">	
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+	<link rel="icon" type="image/png" href="images/icons/favicon.png" />
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
 	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">	
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
 	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">	
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
 	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
@@ -20,13 +81,14 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
+
 <body class="animsition">
-	
+
 	<!-- Header -->
 	<header class="header-v2">
 		<div class="container-menu-desktop trans-03">
 			<div class="wrap-menu-desktop">
-				<nav class="limiter-menu-desktop p-l-45">	
+				<nav class="limiter-menu-desktop p-l-45">
 					<a href="index.php" class="logo">
 						<img src="images/logo.png" alt="IMG-LOGO">
 					</a>
@@ -57,7 +119,7 @@
 								<a href="contact.php">Contatos</a>
 							</li>
 						</ul>
-					</div>	
+					</div>
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m h-full">
@@ -66,19 +128,7 @@
 								<i class="zmdi zmdi-search"></i>
 							</div>
 						</div>
-							
-						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-								<i class="zmdi zmdi-shopping-cart"></i>
-							</div>
-						</div>
 
-						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-								<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i class="bi bi-person-fill-add"></i></a>
-							</div>
-						</div>
-							
 						<div class="flex-c-m h-full p-lr-19">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
 								<i class="zmdi zmdi-menu"></i>
@@ -86,11 +136,11 @@
 						</div>
 					</div>
 				</nav>
-			</div>	
+			</div>
 		</div>
 
 		<!-- Header Mobile -->
-		<div class="wrap-header-mobile">	
+		<div class="wrap-header-mobile">
 			<div class="logo-mobile">
 				<a href="index.php"><img src="images/logo.png" alt="IMG-LOGO"></a>
 			</div>
@@ -102,15 +152,10 @@
 					</div>
 				</div>
 
-				<div class="flex-c-m h-full p-lr-10 bor5">
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-						<i class="zmdi zmdi-shopping-cart"></i>
-					</div>
-				</div>
-
 				<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-						<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i class="bi bi-person-fill-add"></i></a>
+						<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i
+								class="bi bi-person-fill-add"></i></a>
 					</div>
 				</div>
 
@@ -154,145 +199,57 @@
 			</ul>
 		</div>
 
-<!-- Modal Search -->
-<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="display: none;">
-	<div class="container-search-header">
-		<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-			<img src="images/icons/icon-close2.png" alt="CLOSE">
-		</button>
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="display: none;">
+			<div class="container-search-header">
+				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+					<img src="images/icons/icon-close2.png" alt="CLOSE">
+				</button>
 
-		<form class="wrap-search-header flex-w p-l-15">
-			<button class="flex-c-m trans-04" type="submit">
-				<i class="zmdi zmdi-search"></i>
-			</button>
-			<input class="plh3" type="text" name="search" placeholder="Search...">
-		</form>
-	</div>
-</div>
+				<form class="wrap-search-header flex-w p-l-15">
+					<button class="flex-c-m trans-04" type="submit">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+					<input class="plh3" type="text" name="search" placeholder="Search...">
+				</form>
+			</div>
+		</div>
 
-<script>
-// Garante que o modal de busca só aparece ao clicar no ícone de busca
-document.addEventListener('DOMContentLoaded', function() {
-	var modal = document.querySelector('.modal-search-header');
-	var showBtns = document.querySelectorAll('.js-show-modal-search');
-	var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
+		<script>
+			// Garante que o modal de busca só aparece ao clicar no ícone de busca
+			document.addEventListener('DOMContentLoaded', function () {
+				var modal = document.querySelector('.modal-search-header');
+				var showBtns = document.querySelectorAll('.js-show-modal-search');
+				var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
 
-	showBtns.forEach(function(btn) {
-		btn.addEventListener('click', function(e) {
-			e.preventDefault();
-			modal.style.display = 'flex';
-			var input = modal.querySelector('input');
-			if(input) input.focus();
-		});
-	});
+				showBtns.forEach(function (btn) {
+					btn.addEventListener('click', function (e) {
+						e.preventDefault();
+						modal.style.display = 'flex';
+						var input = modal.querySelector('input');
+						if (input) input.focus();
+					});
+				});
 
-	hideBtns.forEach(function(btn) {
-		btn.addEventListener('click', function(e) {
-			e.preventDefault();
-			modal.style.display = 'none';
-		});
-	});
+				hideBtns.forEach(function (btn) {
+					btn.addEventListener('click', function (e) {
+						e.preventDefault();
+						modal.style.display = 'none';
+					});
+				});
 
-	// Fecha o modal ao clicar fora do container
-	modal.addEventListener('click', function(e) {
-		if (e.target === modal) {
-			modal.style.display = 'none';
-		}
-	});
-});
-</script>
+				// Fecha o modal ao clicar fora do container
+				modal.addEventListener('click', function (e) {
+					if (e.target === modal) {
+						modal.style.display = 'none';
+					}
+				});
+			});
+		</script>
 	</header>
 
 	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart">
-		<div class="s-full js-hide-cart"></div>
 
-		<div class="header-cart flex-col-l p-l-65 p-r-25">
-			<div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2">
-					Seu Carrinho
-				</span>
-
-				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-					<i class="zmdi zmdi-close"></i>
-				</div>
-			</div>
-			
-			<div class="header-cart-content flex-w js-pscroll">
-				<ul class="header-cart-wrapitem w-full">
-<li class="header-cart-item flex-w flex-t m-b-12 js-product-block">
-	<div class="header-cart-item-img js-product-img">
-		<img src="images/item-cart-01.jpg" alt="IMG">
-	</div>
-
-	<div class="header-cart-item-txt p-t-8">
-		<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04 js-product-name">
-			Pregueado Camisa Branca
-		</a>
-
-		<span class="header-cart-item-info js-product-price">
-			1 x $19.00
-		</span>
-		<span class="js-product-desc" style="display:none;">Camisa branca pregueada, tecido leve e confortável.</span>
-		<button class="btn btn-sm btn-primary js-show-modal1" style="margin-top:8px;">Visualizar</button>
-	</div>
-</li>
-
-<li class="header-cart-item flex-w flex-t m-b-12 js-product-block">
-	<div class="header-cart-item-img js-product-img">
-		<img src="images/item-cart-02.jpg" alt="IMG">
-	</div>
-
-	<div class="header-cart-item-txt p-t-8">
-		<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04 js-product-name">
-			Converse All Star
-		</a>
-
-		<span class="header-cart-item-info js-product-price">
-			1 x $39.00
-		</span>
-		<span class="js-product-desc" style="display:none;">Tênis clássico Converse All Star, ideal para o dia a dia.</span>
-		<button class="btn btn-sm btn-primary js-show-modal1" style="margin-top:8px;">Visualizar</button>
-	</div>
-</li>
-
-<li class="header-cart-item flex-w flex-t m-b-12 js-product-block">
-	<div class="header-cart-item-img js-product-img">
-		<img src="images/item-cart-03.jpg" alt="IMG">
-	</div>
-
-	<div class="header-cart-item-txt p-t-8">
-		<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04 js-product-name">
-			Couro Nixon Porter
-		</a>
-
-		<span class="header-cart-item-info js-product-price">
-			1 x $17.00
-		</span>
-		<span class="js-product-desc" style="display:none;">Relógio Nixon Porter com pulseira de couro legítimo.</span>
-		<button class="btn btn-sm btn-primary js-show-modal1" style="margin-top:8px;">Visualizar</button>
-	</div>
-</li>
-				</ul>
-				
-				<div class="w-full">
-					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
-					</div>
-
-					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							Ver carrinho
-						</a>
-
-						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Confira
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
 	<!-- breadcrumb -->
@@ -308,202 +265,99 @@ document.addEventListener('DOMContentLoaded', function() {
 			</span>
 		</div>
 	</div>
-		
+
 
 	<!-- Shoping Cart -->
-	<form class="bg0 p-t-75 p-b-85">
+
+	<form class="bg0 p-t-75 p-b-85" method="post" action="atualizar-carrinho.php">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
+								<!-- Cabeçalho da tabela -->
 								<tr class="table_head">
 									<th class="column-1">Produto</th>
-									<th class="column-2"></th>
+									<th class="column-2">Nome</th>
 									<th class="column-3">Preço</th>
 									<th class="column-4">Quantidade</th>
 									<th class="column-5">Total</th>
 								</tr>
 
-								<tr class="table_row">
-									<td class="column-1">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-04.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2">Morangos Frescos</td>
-									<td class="column-3">R$ 36.00</td>
-									<td class="column-4">
-										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
+								<?php
+								$total = 0;
 
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
-										</div>
-									</td>
-									<td class="column-5">R$ 36.00</td>
-								</tr>
-
-								<tr class="table_row">
-									<td class="column-1">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-05.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2">Jaqueta Leve</td>
-									<td class="column-3">R$ 16.00</td>
-									<td class="column-4">
-										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
-
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
-										</div>
-									</td>
-									<td class="column-5">R$ 16.00</td>
-								</tr>
+								if (!empty($_SESSION['carrinho'])):
+									foreach ($_SESSION['carrinho'] as $id => $produto):
+										$nome = htmlspecialchars($produto['nome']);
+										$preco = (float) $produto['preco'];
+										$quant = (int) $produto['quantidade'];
+										$imagem = htmlspecialchars($produto['imagem']);
+										$subtotal = $preco * $quant;
+										$total += $subtotal;
+										?>
+										<!-- Linha do produto -->
+										<tr class="table_row">
+											<td class="column-1">
+												<div class="how-itemcart1">
+													<img src="images/<?= $imagem ?>" alt="<?= $nome ?>"
+														style="width: 80px; height: auto;">
+												</div>
+											</td>
+											<td class="column-2"><?= $nome ?></td>
+											<td class="column-3">R$ <?= number_format($preco, 2, ',', '.') ?></td>
+											<td class="column-4">
+												<input type="number" name="quantidade[<?= $id ?>]" value="<?= $quant ?>" min="1"
+													class="form-control text-center" style="max-width: 70px;">
+											</td>
+											<td class="column-5">R$ <?= number_format($subtotal, 2, ',', '.') ?></td>
+										</tr>
+										<?php
+									endforeach;
+								else:
+									?>
+									<!-- Carrinho vazio -->
+									<tr>
+										<td colspan="5" class="text-center">Seu carrinho está vazio.</td>
+									</tr>
+								<?php endif; ?>
 							</table>
+
 						</div>
 
-						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-									
-								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									Aplicar cupom
-								</div>
-							</div>
-
-							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-								Atualizar carrinho
-							</div>
+						<div
+							class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+							<a href="shoping-cart.php">Atualizar carrinho</a>
 						</div>
 					</div>
 				</div>
 
 				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-						<h4 class="mtext-109 cl2 p-b-30">
-							Total do Carrinho
-						</h4>
-
-						<div class="flex-w flex-t bor12 p-b-13">
-							<div class="size-208">
-								<span class="stext-110 cl2">
-									Subtotal:
-								</span>
-							</div>
-
-							<div class="size-209">
-								<span class="mtext-110 cl2">
-									R$79.65
-								</span>
-							</div>
-						</div>
-
-						<div class="flex-w flex-t bor12 p-t-15 p-b-30">
-							<div class="size-208 w-full-ssm">
-								<span class="stext-110 cl2">
-									Envio:
-								</span>
-							</div>
-
-							<div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
-								<p class="stext-111 cl6 p-t-2">
-									Oferecemos diversas opções de envio para garantir que seu pedido 
-									chegue com segurança, rapidez e do jeitinho que você preferir.
-								</p>
-								
-								<div class="p-t-15">
-									<span class="stext-112 cl8">
-										Calcular envio:
-									</span>
-
-									<div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-										<select class="js-select2" name="time">
-											<option>Selecione um estado</option>
-											<option value="AC">Acre</option>
-											<option value="AL">Alagoas</option>
-											<option value="AP">Amapá</option>
-											<option value="AM">Amazonas</option>
-											<option value="BA">Bahia</option>
-											<option value="CE">Ceará</option>
-											<option value="DF">Distrito Federal</option>
-											<option value="ES">Espírito Santo</option>
-											<option value="GO">Goiás</option>
-											<option value="MA">Maranhão</option>
-											<option value="MT">Mato Grosso</option>
-											<option value="MS">Mato Grosso do Sul</option>
-											<option value="MG">Minas Gerais</option>
-											<option value="PA">Pará</option>
-											<option value="PB">Paraíba</option>
-											<option value="PR">Paraná</option>
-											<option value="PE">Pernambuco</option>
-											<option value="PI">Piauí</option>
-											<option value="RJ">Rio de Janeiro</option>
-											<option value="RN">Rio Grande do Norte</option>
-											<option value="RS">Rio Grande do Sul</option>
-											<option value="RO">Rondônia</option>
-											<option value="RR">Roraima</option>
-											<option value="SC">Santa Catarina</option>
-											<option value="SP">São Paulo</option>
-											<option value="SE">Sergipe</option>
-											<option value="TO">Tocantins</option>
-										</select>
-										<div class="dropDownSelect2"></div>
-									</div>
-
-									<div class="bor8 bg0 m-b-12">
-										<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="Cidade">
-									</div>
-
-									<div class="bor8 bg0 m-b-22">
-										<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="CEP">
-									</div>
-									
-									<div class="flex-w">
-										<div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-											Atualizar Total
-										</div>
-									</div>
-										
-								</div>
-							</div>
-						</div>
+					<div class="bor10 p-lr-40 p-t-30 p-b-40">
+						<h4 class="mtext-109 cl2 p-b-30">Total do Carrinho</h4>
 
 						<div class="flex-w flex-t p-t-27 p-b-33">
 							<div class="size-208">
-								<span class="mtext-101 cl2">
-									Total:
-								</span>
+								<span class="mtext-101 cl2">Total:</span>
 							</div>
 
 							<div class="size-209 p-t-1">
-								<span class="mtext-110 cl2">
-									$79.65
-								</span>
+								<span class="mtext-110 cl2">R$ <?= number_format($total, 2, ',', '.') ?></span>
 							</div>
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-							Continuar compra
-						</button>
+						<a href="checkout.php"
+							class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+							Finalizar compra
+						</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
+
+
 
 	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
@@ -579,7 +433,8 @@ document.addEventListener('DOMContentLoaded', function() {
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Dúvidas? Entre em contato conosco na loja, localizada na Rua da Paz, 379, Centro, ou ligue para (97) 9876-6879.
+						Dúvidas? Entre em contato conosco na loja, localizada na Rua da Paz, 379, Centro, ou ligue para
+						(97) 9876-6879.
 					</p>
 
 					<div class="p-t-27">
@@ -604,7 +459,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					<form>
 						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+								placeholder="email@example.com">
 							<div class="focus-input1 trans-04"></div>
 						</div>
 
@@ -642,7 +498,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Kiluxo | Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos os direitos reservados
+					Kiluxo | Copyright &copy;
+					<script>document.write(new Date().getFullYear());</script> Todos os direitos reservados
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
 				</p>
@@ -657,44 +514,45 @@ document.addEventListener('DOMContentLoaded', function() {
 		</span>
 	</div>
 
-<!--===============================================================================================-->	
+	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/select2/select2.min.js"></script>
 	<script>
-		$(".js-select2").each(function(){
+		$(".js-select2").each(function () {
 			$(this).select2({
 				minimumResultsForSearch: 20,
 				dropdownParent: $(this).next('.dropDownSelect2')
 			});
 		})
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script>
-		$('.js-pscroll').each(function(){
-			$(this).css('position','relative');
-			$(this).css('overflow','hidden');
+		$('.js-pscroll').each(function () {
+			$(this).css('position', 'relative');
+			$(this).css('overflow', 'hidden');
 			var ps = new PerfectScrollbar(this, {
 				wheelSpeed: 1,
 				scrollingThreshold: 1000,
 				wheelPropagation: false,
 			});
 
-			$(window).on('resize', function(){
+			$(window).on('resize', function () {
 				ps.update();
 			})
 		});
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
 
 </body>
+
 </html>
