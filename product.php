@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 					'quantidade' => 1
 				];
 			}
+
 		} else {
 			// Log de depuração opcional
 			error_log("Tentativa de adicionar item incompleto ao carrinho: " . print_r($_POST, true));
@@ -38,13 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 	}
 }
 
-// Calcular total de itens no carrinho
-$totalItensCarrinho = 0;
-if (isset($_SESSION['carrinho'])) {
-	foreach ($_SESSION['carrinho'] as $item) {
-		$totalItensCarrinho += $item['quantidade'];
-	}
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -125,11 +119,6 @@ if (isset($_SESSION['carrinho'])) {
 							</div>
 						</div>
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
-							data-notify="<?= $totalItensCarrinho ?>">
-							<i class="zmdi zmdi-shopping-cart"></i>
-						</div>
-
 						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
 								<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i
@@ -159,12 +148,6 @@ if (isset($_SESSION['carrinho'])) {
 						<i class="zmdi zmdi-search"></i>
 					</div>
 				</div>
-
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
-					data-notify="<?= $totalItensCarrinho ?>">
-					<i class="zmdi zmdi-shopping-cart"></i>
-				</div>
-
 
 				<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
@@ -352,53 +335,6 @@ if (isset($_SESSION['carrinho'])) {
 			</div>
 		</div>
 	</aside>
-
-	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart">
-		<div class="s-full js-hide-cart"></div>
-
-		<div class="header-cart flex-col-l p-l-65 p-r-25">
-			<div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2">Seu Carrinho</span>
-				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-					<i class="zmdi zmdi-close"></i>
-				</div>
-			</div>
-
-			<ul class="list-unstyled">
-				<?php foreach ($_SESSION['carrinho'] as $item): ?>
-					<li class="d-flex align-items-center mb-3 border-bottom pb-3">
-						<div style="width: 60px; height: 60px; overflow: hidden; border-radius: 0.5rem;" class="me-4">
-							<img src="<?= htmlspecialchars($item['imagem'] ?? 'images/placeholder.png') ?>"
-								alt="<?= htmlspecialchars($item['nome'] ?? 'Produto') ?>" class="img-fluid"
-								style="object-fit: cover;" />
-						</div>
-
-						<div class="flex-grow-1">
-							<a href="#" class="text-decoration-none fw-semibold text-dark">
-								<?= htmlspecialchars($item['nome'] ?? 'Produto') ?>
-							</a>
-							<div class="text-muted">
-								<?= (int) ($item['quantidade'] ?? 1) ?> x R$
-								<?= number_format($item['preco'] ?? 0, 2, ',', '.') ?>
-							</div>
-						</div>
-					</li>
-				<?php endforeach; ?>
-
-				<li class="mt-4">
-					<a href="/finalizar-pedido.php" class="btn btn-primary w-100">
-						Finalizar Pedido
-					</a>
-				</li>
-			</ul>
-
-
-		</div>
-	</div>
-
-
-
 	<!-- Product -->
 	<div class="bg0 m-t-23 p-b-140">
 		<div class="container mt-5">
@@ -449,7 +385,8 @@ if (isset($_SESSION['carrinho'])) {
 												value="<?= htmlspecialchars($produto['nome']) ?>">
 											<input type="hidden" name="preco" value="<?= $produto['preco'] ?>">
 											<input type="hidden" name="imagem"
-												value="images/<?= htmlspecialchars($produto['imagem']) ?>">
+												value="<?= htmlspecialchars($produto['imagem']) ?>"> <!-- CORRETO -->
+
 											<input type="hidden" name="descricao"
 												value="<?= htmlspecialchars($produto['descricao']) ?>">
 											<input type="hidden" name="quantidade" value="1">

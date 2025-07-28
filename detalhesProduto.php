@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 		}
 
 		// Redireciona para o carrinho após adicionar
-		header('Location: shoping-cart.php');
+		header('Location: product.php');
 		exit;
 
 	} else {
