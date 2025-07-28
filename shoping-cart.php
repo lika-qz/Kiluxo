@@ -2,6 +2,12 @@
 session_start();
 require_once 'listaProdutos.php';
 
+// Função para limpar o carrinho
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['limpar_carrinho'])) {
+	unset($_SESSION['carrinho']);
+	header('Location: shoping-cart.php'); // Redireciona para evitar reenvio de formulário
+	exit;
+}
 
 // Inicializa o carrinho se não existir
 if (!isset($_SESSION['carrinho'])) {
@@ -314,7 +320,7 @@ foreach ($_SESSION['carrinho'] as $item) {
 											</td>
 											<td class="column-5">R$ <?= number_format($subtotal, 2, ',', '.') ?></td>
 										</tr>
-										
+
 										<?php
 									endforeach;
 								else:
@@ -323,17 +329,17 @@ foreach ($_SESSION['carrinho'] as $item) {
 									<tr>
 										<td colspan="5" class="text-center">Seu carrinho está vazio.</td>
 									</tr>
-									
+
 								<?php endif; ?>
 							</table>
 
 						</div>
 
-						<div
-							class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+						<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
 							<a href="shoping-cart.php">Atualizar carrinho</a>
 						</div>
-
+						
+						
 					</div>
 				</div>
 
@@ -360,6 +366,7 @@ foreach ($_SESSION['carrinho'] as $item) {
 			</div>
 		</div>
 	</form>
+
 
 
 
