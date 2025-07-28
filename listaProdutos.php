@@ -3,7 +3,7 @@
 $produtos = [
     [
         'id' => 1,
-        'nome' => 'Camisa Esprit com babados',
+        'nome' => 'Camisa Esprit',
         'preco' => 79.90,
         'imagem' => 'product-01.jpg',
         'descricao' => 'Camisa com babados, confortável e estilosa.',

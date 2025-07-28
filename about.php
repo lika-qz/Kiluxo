@@ -29,34 +29,34 @@
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop p-l-45">	
 
-					<a href="index.html" class="logo">
+					<a href="index.php" class="logo">
 						<img src="images/logo.png" alt="IMG-LOGO">
 					</a>
 
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="index.html">Home</a>
+								<a href="index.php">Home</a>
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="product.php">Shop</a>
 							</li>
 
 							<li class="label1" data-label1="New">
-								<a href="shoping-cart.html">Carrinho</a>
+								<a href="shoping-cart.php">Carrinho</a>
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+								<a href="blog.php">Blog</a>
 							</li>
 
 							<li class="active-menu">
-								<a href="about.html">Sobre nós</a>
+								<a href="about.php">Sobre nós</a>
 							</li>
 
 							<li>
-								<a href="contact.html">Contatos</a>
+								<a href="contact.php">Contatos</a>
 							</li>
 						</ul>
 					</div>	
@@ -94,7 +94,7 @@
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">	
 			<div class="logo-mobile">
-				<a href="index.html"><img src="images/logo.png" alt="IMG-LOGO"></a>
+				<a href="index.php"><img src="images/logo.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
@@ -131,27 +131,27 @@
 		<div class="menu-mobile">
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="index.php">Home</a>
 				</li>
 
 				<li>
-					<a href="product.html">Shop</a>
+					<a href="product.php">Shop</a>
 				</li>
 
 				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="New">Carrinho</a>
+					<a href="shoping-cart.php" class="label1 rs1" data-label1="New">Carrinho</a>
 				</li>
 
 				<li>
-					<a href="blog.html">Blog</a>
+					<a href="blog.php">Blog</a>
 				</li>
 
 				<li>
-					<a href="about.html">Sobre nós</a>
+					<a href="about.php">Sobre nós</a>
 				</li>
 
 				<li>
-					<a href="contact.html">Contatos</a>
+					<a href="contact.php">Contatos</a>
 				</li>
 			</ul>
 		</div>
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			<div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
 				<ul class="sidebar-link w-full">
 					<li class="p-b-13">
-						<a href="index.html" class="stext-102 cl2 hov-cl1 trans-04">
+						<a href="index.php" class="stext-102 cl2 hov-cl1 trans-04">
 							Home
 						</a>
 					</li>
@@ -400,11 +400,11 @@ document.addEventListener('DOMContentLoaded', function() {
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
 						</a>
 
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Check Out
 						</a>
 					</div>

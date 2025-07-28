@@ -24,40 +24,41 @@
 </head>
 
 <body class="animsition">
-	<!--header desk-->
+
+	<!-- Header -->
 	<header class="header-v2">
 		<div class="container-menu-desktop trans-03">
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop p-l-45">
 
-					<a href="index.html" class="logo">
+					<a href="index.php" class="logo">
 						<img src="images/logo.png" alt="IMG-LOGO">
 					</a>
 
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
-								<a href="index.html">Home</a>
+							<li>
+								<a href="index.php">Home</a>
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="product.php">Shop</a>
 							</li>
 
 							<li class="label1" data-label1="New">
-								<a href="shoping-cart.html">Carrinho</a>
+								<a href="shoping-cart.php">Carrinho</a>
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+								<a href="blog.php">Blog</a>
 							</li>
 
 							<li>
-								<a href="about.html">Sobre nós</a>
+								<a href="about.php">Sobre nós</a>
 							</li>
 
-							<li>
-								<a href="contact.html">Contatos</a>
+							<li class="active-menu">
+								<a href="contact.php">Contatos</a>
 							</li>
 						</ul>
 					</div>
@@ -79,7 +80,7 @@
 
 						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-								<a href="cadastrar.html" style="color: rgb(49, 49, 49);"><i
+								<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i
 										class="bi bi-person-fill-add"></i></a>
 							</div>
 						</div>
@@ -97,7 +98,7 @@
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">
 			<div class="logo-mobile">
-				<a href="index.html"><img src="images/logo.png" alt="IMG-LOGO"></a>
+				<a href="index.php"><img src="images/logo.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
@@ -116,7 +117,7 @@
 
 				<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-						<a href="cadastrar.html" style="color: rgb(49, 49, 49);"><i
+						<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i
 								class="bi bi-person-fill-add"></i></a>
 					</div>
 				</div>
@@ -136,47 +137,49 @@
 		<div class="menu-mobile">
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="index.php">Home</a>
 				</li>
 
 				<li>
-					<a href="product.html">Shop</a>
+					<a href="product.php">Shop</a>
 				</li>
 
 				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="New">Carrinho</a>
+					<a href="shoping-cart.php" class="label1 rs1" data-label1="New">Carrinho</a>
 				</li>
 
 				<li>
-					<a href="blog.html">Blog</a>
+					<a href="blog.php">Blog</a>
 				</li>
 
 				<li>
-					<a href="about.html">Sobre nós</a>
+					<a href="about.php">Sobre nós</a>
 				</li>
 
 				<li>
-					<a href="contact.html">Contatos</a>
+					<a href="contact.php">Contatos</a>
 				</li>
 			</ul>
 		</div>
 
 		<!-- Modal Search -->
-		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="display: none;">
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
 			<div class="container-search-header">
-				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search" type="button"
+					aria-label="Fechar busca">
 					<img src="images/icons/icon-close2.png" alt="CLOSE">
 				</button>
 
-				<form class="wrap-search-header flex-w p-l-15">
-					<button class="flex-c-m trans-04" type="submit">
+				<form class="wrap-search-header flex-w p-l-15" action="#" method="GET" role="search">
+					<button class="flex-c-m trans-04" type="submit" name="search-button" aria-label="Pesquisar">
 						<i class="zmdi zmdi-search"></i>
 					</button>
-					<input class="plh3" type="text" name="search" placeholder="Search...">
+					<label for="search-input" class="sr-only">Pesquisar</label>
+					<input id="search-input" class="plh3" type="text" name="search" placeholder="Search..."
+						autocomplete="off">
 				</form>
 			</div>
 		</div>
-
 		<script>
 			// Garante que o modal de busca só aparece ao clicar no ícone de busca
 			document.addEventListener('DOMContentLoaded', function () {
@@ -209,6 +212,129 @@
 			});
 		</script>
 	</header>
+
+	<!-- Sidebar -->
+	<aside class="wrap-sidebar js-sidebar">
+		<div class="s-full js-hide-sidebar"></div>
+
+		<div class="sidebar flex-col-l p-t-22 p-b-25">
+			<div class="flex-r w-full p-b-30 p-r-27">
+				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-sidebar">
+					<i class="zmdi zmdi-close"></i>
+				</div>
+			</div>
+
+			<div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
+				<ul class="sidebar-link w-full">
+					<li class="p-b-13">
+						<a href="index.php" class="stext-102 cl2 hov-cl1 trans-04">
+							Home
+						</a>
+					</li>
+
+					<li class="p-b-13">
+						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
+							Favoritos
+						</a>
+					</li>
+
+					<li class="p-b-13">
+						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
+							Minha Conta
+						</a>
+					</li>
+
+					<li class="p-b-13">
+						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
+							Rastrear
+						</a>
+					</li>
+
+					<li class="p-b-13">
+						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
+							Ajuda & FAQs
+						</a>
+					</li>
+				</ul>
+
+				<div class="sidebar-gallery w-full p-tb-30">
+					<span class="mtext-101 cl5">
+						@Kiluxo
+					</span>
+
+					<div class="flex-w flex-sb p-t-36 gallery-lb">
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-01.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-01.jpg');"></a>
+						</div>
+
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-02.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-02.jpg');"></a>
+						</div>
+
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-03.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-03.jpg');"></a>
+						</div>
+
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-04.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-04.jpg');"></a>
+						</div>
+
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-05.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-05.jpg');"></a>
+						</div>
+
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-06.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-06.jpg');"></a>
+						</div>
+
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-07.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-07.jpg');"></a>
+						</div>
+
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-08.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-08.jpg');"></a>
+						</div>
+
+						<!-- item gallery sidebar -->
+						<div class="wrap-item-gallery m-b-10">
+							<a class="item-gallery bg-img1" href="images/gallery-09.jpg" data-lightbox="gallery"
+								style="background-image: url('images/gallery-09.jpg');"></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="sidebar-gallery w-full">
+					<span class="mtext-101 cl5">
+						Sobre nós
+					</span>
+
+					<p class="stext-108 cl6 p-t-27">
+						Na <b>Kiluxo</b>, estilo e autenticidade andam lado a lado.
+						Cada peça é escolhida com carinho para destacar sua personalidade única.
+						Mais que uma loja, somos uma experiência de atitude e elegância.
+						Queremos que você se sinta confiante em cada look.
+						Vem brilhar com a gente e descubra o que é ser <b>Kiluxo</b>
+					</p>
+				</div>
+			</div>
+		</div>
+	</aside>
 
 	<!-- Cart -->
 	<div class="wrap-header-cart js-panel-cart">
@@ -282,12 +408,12 @@
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html"
+						<a href="shoping-cart.php"
 							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
 						</a>
 
-						<a href="shoping-cart.html"
+						<a href="shoping-cart.php"
 							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Check Out
 						</a>
@@ -298,405 +424,102 @@
 	</div>
 
 
-	<!-- breadcrumb -->
-	<div class="container">
-		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-
-			<a href="blog.html" class="stext-109 cl8 hov-cl1 trans-04">
-				Blog
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-
-			<span class="stext-109 cl4">
-				8 Inspiring Ways to Wear Dresses in the Winter
-			</span>
-		</div>
-	</div>
+	<!-- Title page -->
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-01.jpg');">
+		<h2 class="ltext-105 cl0 txt-center">
+			Contatos
+		</h2>
+	</section>
 
 
 	<!-- Content page -->
-	<section class="bg0 p-t-52 p-b-20">
+	<section class="bg0 p-t-104 p-b-116">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-lg-9 p-b-80">
-					<div class="p-r-45 p-r-0-lg">
-						<!--  -->
-						<div class="wrap-pic-w how-pos5-parent">
-							<img src="images/blog-04.jpg" alt="IMG-BLOG">
+			<div class="flex-w flex-tr">
+				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+					<form>
+						<h4 class="mtext-105 cl2 txt-center p-b-30">
+							Envie-nos uma mensagem
+						</h4>
 
-							<div class="flex-col-c-m size-123 bg9 how-pos5">
-								<span class="ltext-107 cl2 txt-center">
-									22
-								</span>
-
-								<span class="stext-109 cl3 txt-center">
-									Jan 2018
-								</span>
-							</div>
+						<div class="bor8 m-b-20 how-pos4-parent">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email"
+								placeholder="Seu Endereço de Email">
+							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
 						</div>
 
-						<div class="p-t-32">
-							<span class="flex-w flex-m stext-111 cl2 p-b-19">
-								<span>
-									<span class="cl4">By</span> Admin
-									<span class="cl12 m-l-4 m-r-6">|</span>
-								</span>
-
-								<span>
-									22 Jan, 2018
-									<span class="cl12 m-l-4 m-r-6">|</span>
-								</span>
-
-								<span>
-									StreetStyle, Fashion, Couple
-									<span class="cl12 m-l-4 m-r-6">|</span>
-								</span>
-
-								<span>
-									8 Comments
-								</span>
-							</span>
-
-							<h4 class="ltext-109 cl2 p-b-28">
-								8 Inspiring Ways to Wear Dresses in the Winter
-							</h4>
-
-							<p class="stext-117 cl6 p-b-26">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci
-								luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum
-								dictum. Donec pulvinar a magna ut malesuada. In posuere felis diam, vel sodales metus
-								accumsan in. Duis viverra dui eu pharetra pellentesque. Donec a eros leo. Quisque sed
-								ligula vitae lorem efficitur faucibus. Praesent sit amet imperdiet ante. Nulla id tellus
-								auctor, dictum libero a, malesuada nisi. Nulla in porta nibh, id vestibulum ipsum.
-								Praesent dapibus tempus erat quis aliquet. Donec ac purus id sapien condimentum feugiat.
-							</p>
-
-							<p class="stext-117 cl6 p-b-26">
-								Praesent vel mi bibendum, finibus leo ac, condimentum arcu. Pellentesque sem ex,
-								tristique sit amet suscipit in, mattis imperdiet enim. Integer tempus justo nec velit
-								fringilla, eget eleifend neque blandit. Sed tempor magna sed congue auctor. Mauris eu
-								turpis eget tortor ultricies elementum. Phasellus vel placerat orci, a venenatis justo.
-								Phasellus faucibus venenatis nisl vitae vestibulum. Praesent id nibh arcu. Vivamus
-								sagittis accumsan felis, quis vulputate
-							</p>
+						<div class="bor8 m-b-30">
+							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg"
+								placeholder="Como podemos ajudar?"></textarea>
 						</div>
 
-						<div class="flex-w flex-t p-t-16">
-							<span class="size-216 stext-116 cl8 p-t-4">
-								Tags
-							</span>
-
-							<div class="flex-w size-217">
-								<a href="#"
-									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Streetstyle
-								</a>
-
-								<a href="#"
-									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Crafts
-								</a>
-							</div>
-						</div>
-
-						<!--  -->
-						<div class="p-t-40">
-							<h5 class="mtext-113 cl2 p-b-12">
-								Leave a Comment
-							</h5>
-
-							<p class="stext-107 cl6 p-b-40">
-								Your email address will not be published. Required fields are marked *
-							</p>
-
-							<form>
-								<div class="bor19 m-b-20">
-									<textarea class="stext-111 cl2 plh3 size-124 p-lr-18 p-tb-15" name="cmt"
-										placeholder="Comment..."></textarea>
-								</div>
-
-								<div class="bor19 size-218 m-b-20">
-									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="name"
-										placeholder="Name *">
-								</div>
-
-								<div class="bor19 size-218 m-b-20">
-									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="email"
-										placeholder="Email *">
-								</div>
-
-								<div class="bor19 size-218 m-b-30">
-									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="web"
-										placeholder="Website">
-								</div>
-
-								<button class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">
-									Post Comment
-								</button>
-							</form>
-						</div>
-					</div>
+						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+							Enviar
+						</button>
+					</form>
 				</div>
 
-				<div class="col-md-4 col-lg-3 p-b-80">
-					<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-						<div class="container-search-header">
-							<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search" type="button"
-								aria-label="Fechar busca">
-								<img src="images/icons/icon-close2.png" alt="CLOSE">
-							</button>
+				<div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+					<div class="flex-w w-full p-b-42">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-map-marker"></span>
+						</span>
 
-							<form class="wrap-search-header flex-w p-l-15" action="#" method="GET" role="search">
-								<button class="flex-c-m trans-04" type="submit" name="search-button"
-									aria-label="Pesquisar">
-									<i class="zmdi zmdi-search"></i>
-								</button>
-								<label for="search-input" class="sr-only">Pesquisar</label>
-								<input id="search-input" class="plh3" type="text" name="search" placeholder="Search..."
-									autocomplete="off">
-							</form>
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								Endereço
+							</span>
+
+							<p class="stext-115 cl6 size-213 p-t-18">
+								Kiluxo, R Padre Victor, N°680, Tauá Mirim, COARI-AM.
+							</p>
 						</div>
 					</div>
 
-					<div class="p-t-55">
-						<h4 class="mtext-112 cl2 p-b-33">
-							Categories
-						</h4>
+					<div class="flex-w w-full p-b-42">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-phone-handset"></span>
+						</span>
 
-						<ul>
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									Fashion
-								</a>
-							</li>
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								Vamos conversar
+							</span>
 
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									Beauty
-								</a>
-							</li>
-
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									Street Style
-								</a>
-							</li>
-
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									Life Style
-								</a>
-							</li>
-
-							<li class="bor18">
-								<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-									DIY & Crafts
-								</a>
-							</li>
-						</ul>
+							<p class="stext-115 cl1 size-213 p-t-18">
+								+55 (97)8402-9004 <br>
+								+55 (97)8108-3160
+							</p>
+						</div>
 					</div>
 
-					<div class="p-t-65">
-						<h4 class="mtext-112 cl2 p-b-33">
-							Featured Products
-						</h4>
+					<div class="flex-w w-full">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-envelope"></span>
+						</span>
 
-						<ul>
-							<li class="flex-w flex-t p-b-30">
-								<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-									<img src="images/product-min-01.jpg" alt="PRODUCT">
-								</a>
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								Suporte Venda
+							</span>
 
-								<div class="size-215 flex-col-t p-t-8">
-									<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-										White Shirt With Pleat Detail Back
-									</a>
-
-									<span class="stext-116 cl6 p-t-20">
-										$19.00
-									</span>
-								</div>
-							</li>
-
-							<li class="flex-w flex-t p-b-30">
-								<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-									<img src="images/product-min-02.jpg" alt="PRODUCT">
-								</a>
-
-								<div class="size-215 flex-col-t p-t-8">
-									<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-										Converse All Star Hi Black Canvas
-									</a>
-
-									<span class="stext-116 cl6 p-t-20">
-										$39.00
-									</span>
-								</div>
-							</li>
-
-							<li class="flex-w flex-t p-b-30">
-								<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-									<img src="images/product-min-03.jpg" alt="PRODUCT">
-								</a>
-
-								<div class="size-215 flex-col-t p-t-8">
-									<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-										Nixon Porter Leather Watch In Tan
-									</a>
-
-									<span class="stext-116 cl6 p-t-20">
-										$17.00
-									</span>
-								</div>
-							</li>
-						</ul>
-					</div>
-
-					<div class="p-t-55">
-						<h4 class="mtext-112 cl2 p-b-20">
-							Archive
-						</h4>
-
-						<ul>
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										July 2018
-									</span>
-
-									<span>
-										(9)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										June 2018
-									</span>
-
-									<span>
-										(39)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										May 2018
-									</span>
-
-									<span>
-										(29)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										April 2018
-									</span>
-
-									<span>
-										(35)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										March 2018
-									</span>
-
-									<span>
-										(22)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										February 2018
-									</span>
-
-									<span>
-										(32)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										January 2018
-									</span>
-
-									<span>
-										(21)
-									</span>
-								</a>
-							</li>
-
-							<li class="p-b-7">
-								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
-									<span>
-										December 2017
-									</span>
-
-									<span>
-										(26)
-									</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-
-					<div class="p-t-50">
-						<h4 class="mtext-112 cl2 p-b-27">
-							Tags
-						</h4>
-
-						<div class="flex-w m-r--5">
-							<a href="#"
-								class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Fashion
-							</a>
-
-							<a href="#"
-								class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Lifestyle
-							</a>
-
-							<a href="#"
-								class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Denim
-							</a>
-
-							<a href="#"
-								class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Streetstyle
-							</a>
-
-							<a href="#"
-								class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Crafts
-							</a>
+							<p class="stext-115 cl1 size-213 p-t-18">
+								rafaxsilva2007@gmail.com <br>
+								likaa.qz@gmail.com
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		</div>
 	</section>
+
+
+	<!-- Map -->
+	<div class="map">
+		<div class="size-303" id="google_map" data-map-x="-4.0863411" data-map-y="-63.147009"
+			data-pin="images/icons/Kiluxo.png" data-scrollwhell="0" data-draggable="1" data-zoom="11"></div>
+	</div>
 
 
 
@@ -774,8 +597,8 @@
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Dúvidas? Entre em contato conosco na loja, localizada na Rua da Paz, 379, Centro, ou ligue para
-						(97) 9876-6879.
+						Dúvidas? Entre em contato conosco na loja, localizada na Rua da Padre Victor, 680, Tauá Mirim,
+						ou ligue para (97) 98402-9004.
 					</p>
 
 					<div class="p-t-27">
@@ -840,7 +663,7 @@
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 					Kiluxo | Copyright &copy;
-					<script>document.write(new Date().getFullYear());</script> Todos os direitos reservados
+					<script>document.write(new Date().getFullYear());</script> Todos os direitos reservados.
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
 				</p>
@@ -892,6 +715,9 @@
 			})
 		});
 	</script>
+	<!--===============================================================================================-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
+	<script src="js/map-custom.js"></script>
 	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
 

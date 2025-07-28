@@ -29,34 +29,34 @@
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop p-l-45">
 
-					<a href="index.html" class="logo">
+					<a href="index.php" class="logo">
 						<img src="images/logo.png" alt="IMG-LOGO">
 					</a>
 
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li class="active-menu">
-								<a href="index.html">Home</a>
+								<a href="index.php">Home</a>
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="product.php">Shop</a>
 							</li>
 
 							<li class="label1" data-label1="New">
-								<a href="shoping-cart.html">Carrinho</a>
+								<a href="shoping-cart.php">Carrinho</a>
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+								<a href="blog.php">Blog</a>
 							</li>
 
 							<li>
-								<a href="about.html">Sobre nós</a>
+								<a href="about.php">Sobre nós</a>
 							</li>
 
 							<li>
-								<a href="contact.html">Contatos</a>
+								<a href="contact.php">Contatos</a>
 							</li>
 						</ul>
 					</div>
@@ -72,7 +72,7 @@
 						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
 								data-notify="2">
-								<a href="shoping-cart.html" style="color: rgb(49, 49, 49);"><i class="zmdi zmdi-shopping-cart"></i></a>
+								<a href="shoping-cart.php" style="color: rgb(49, 49, 49);"><i class="zmdi zmdi-shopping-cart"></i></a>
 							</div>
 						</div>
 
@@ -96,7 +96,7 @@
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">
 			<div class="logo-mobile">
-				<a href="index.html"><img src="images/logo.png" alt="IMG-LOGO"></a>
+				<a href="index.php"><img src="images/logo.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
@@ -135,27 +135,27 @@
 		<div class="menu-mobile">
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="index.php">Home</a>
 				</li>
 
 				<li>
-					<a href="product.html">Shop</a>
+					<a href="product.php">Shop</a>
 				</li>
 
 				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="New">Carrinho</a>
+					<a href="shoping-cart.php" class="label1 rs1" data-label1="New">Carrinho</a>
 				</li>
 
 				<li>
-					<a href="blog.html">Blog</a>
+					<a href="blog.php">Blog</a>
 				</li>
 
 				<li>
-					<a href="about.html">Sobre nós</a>
+					<a href="about.php">Sobre nós</a>
 				</li>
 
 				<li>
-					<a href="contact.html">Contatos</a>
+					<a href="contact.php">Contatos</a>
 				</li>
 			</ul>
 		</div>
@@ -194,7 +194,7 @@
 			<div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
 				<ul class="sidebar-link w-full">
 					<li class="p-b-13">
-						<a href="index.html" class="stext-102 cl2 hov-cl1 trans-04">
+						<a href="index.php" class="stext-102 cl2 hov-cl1 trans-04">
 							Home
 						</a>
 					</li>
@@ -376,12 +376,12 @@
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html"
+						<a href="shoping-cart.php"
 							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
 						</a>
 
-						<a href="shoping-cart.html"
+						<a href="shoping-cart.php"
 							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Check Out
 						</a>
@@ -413,7 +413,7 @@
 							</div>
 
 							<div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
-								<a href="product.html"
+								<a href="product.php"
 									class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
 									Compre agora
 								</a>
@@ -439,7 +439,7 @@
 							</div>
 
 							<div class="layer-slick1 animated visible-false" data-appear="slideInUp" data-delay="1600">
-								<a href="product.html"
+								<a href="product.php"
 									class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
 									Compre agora
 								</a>
@@ -466,7 +466,7 @@
 							</div>
 
 							<div class="layer-slick1 animated visible-false" data-appear="rotateIn" data-delay="1600">
-								<a href="product.html"
+								<a href="product.php"
 									class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
 									Compre agora
 								</a>
@@ -487,7 +487,7 @@
 				<div class="block1 wrap-pic-w">
 					<img src="images/banner-04.jpg" alt="IMG-BANNER">
 
-					<a href="product.html"
+					<a href="product.php"
 						class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 						<div class="block1-txt-child1 flex-col-l">
 							<span class="block1-name ltext-102 trans-04 p-b-8">
@@ -513,7 +513,7 @@
 				<div class="block1 wrap-pic-w">
 					<img src="images/banner-05.jpg" alt="IMG-BANNER">
 
-					<a href="product.html"
+					<a href="product.php"
 						class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 						<div class="block1-txt-child1 flex-col-l">
 							<span class="block1-name ltext-102 trans-04 p-b-8">
@@ -539,7 +539,7 @@
 				<div class="block1 wrap-pic-w">
 					<img src="images/banner-06.jpg" alt="IMG-BANNER">
 
-					<a href="product.html"
+					<a href="product.php"
 						class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 						<div class="block1-txt-child1 flex-col-l">
 							<span class="block1-name ltext-102 trans-04 p-b-8">
@@ -646,7 +646,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Esprit Ruffle Shirt
 											</a>
@@ -682,7 +682,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Herschel supply
 											</a>
@@ -718,7 +718,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Only Check Trouser
 											</a>
@@ -754,7 +754,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Classic Trench Coat
 											</a>
@@ -790,7 +790,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Front Pocket Jumper
 											</a>
@@ -826,7 +826,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Vintage Inspired Classic
 											</a>
@@ -862,7 +862,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Shirt in Stretch Cotton
 											</a>
@@ -898,7 +898,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Pieces Metallic Printed
 											</a>
@@ -942,7 +942,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Converse All Star Hi Plimsolls
 											</a>
@@ -978,7 +978,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Femme T-Shirt In Stripe
 											</a>
@@ -1014,7 +1014,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Herschel supply
 											</a>
@@ -1050,7 +1050,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Herschel supply
 											</a>
@@ -1086,7 +1086,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												T-Shirt with Sleeve
 											</a>
@@ -1122,7 +1122,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Pretty Little Thing
 											</a>
@@ -1158,7 +1158,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Mini Silver Mesh Watch
 											</a>
@@ -1194,7 +1194,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Square Neck Back
 											</a>
@@ -1238,7 +1238,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Herschel supply
 											</a>
@@ -1274,7 +1274,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Classic Trench Coat
 											</a>
@@ -1310,7 +1310,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Vintage Inspired Classic
 											</a>
@@ -1346,7 +1346,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Converse All Star Hi Plimsolls
 											</a>
@@ -1382,7 +1382,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Herschel supply
 											</a>
@@ -1418,7 +1418,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												T-Shirt with Sleeve
 											</a>
@@ -1454,7 +1454,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Mini Silver Mesh Watch
 											</a>
@@ -1498,7 +1498,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Only Check Trouser
 											</a>
@@ -1534,7 +1534,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Vintage Inspired Classic
 											</a>
@@ -1570,7 +1570,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Shirt in Stretch Cotton
 											</a>
@@ -1606,7 +1606,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Pieces Metallic Printed
 											</a>
@@ -1642,7 +1642,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Converse All Star Hi Plimsolls
 											</a>
@@ -1678,7 +1678,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Femme T-Shirt In Stripe
 											</a>
@@ -1714,7 +1714,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Herschel supply
 											</a>
@@ -1750,7 +1750,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Herschel supply
 											</a>
@@ -1786,7 +1786,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												T-Shirt with Sleeve
 											</a>
@@ -1822,7 +1822,7 @@
 
 									<div class="block2-txt flex-w flex-t p-t-14">
 										<div class="block2-txt-child1 flex-col-l ">
-											<a href="product-detail.html"
+											<a href="product-detail.php"
 												class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 												Square Neck Back
 											</a>
@@ -1865,7 +1865,7 @@
 				<div class="col-sm-6 col-md-4 p-b-40">
 					<div class="blog-item">
 						<div class="hov-img0">
-							<a href="blog-detail.html">
+							<a href="blog-detail.php">
 								<img src="images/blog-01.jpg" alt="IMG-BLOG">
 							</a>
 						</div>
@@ -1894,7 +1894,7 @@
 							</div>
 
 							<h4 class="p-b-12">
-								<a href="blog-detail.html" class="mtext-101 cl2 hov-cl1 trans-04">
+								<a href="blog-detail.php" class="mtext-101 cl2 hov-cl1 trans-04">
 									8 Maneiras inspiradoras de usar vestidos no inverno.
 								</a>
 							</h4>
@@ -1911,7 +1911,7 @@
 				<div class="col-sm-6 col-md-4 p-b-40">
 					<div class="blog-item">
 						<div class="hov-img0">
-							<a href="blog-detail.html">
+							<a href="blog-detail.php">
 								<img src="images/blog-02.jpg" alt="IMG-BLOG">
 							</a>
 						</div>
@@ -1940,7 +1940,7 @@
 							</div>
 
 							<h4 class="p-b-12">
-								<a href="blog-detail.html" class="mtext-101 cl2 hov-cl1 trans-04">
+								<a href="blog-detail.php" class="mtext-101 cl2 hov-cl1 trans-04">
 									A grande lista de presentes masculinos para o feriado.
 								</a>
 							</h4>
@@ -1956,7 +1956,7 @@
 				<div class="col-sm-6 col-md-4 p-b-40">
 					<div class="blog-item">
 						<div class="hov-img0">
-							<a href="blog-detail.html">
+							<a href="blog-detail.php">
 								<img src="images/blog-03.jpg" alt="IMG-BLOG">
 							</a>
 						</div>
@@ -1984,7 +1984,7 @@
 							</div>
 
 							<h4 class="p-b-12">
-								<a href="blog-detail.html" class="mtext-101 cl2 hov-cl1 trans-04">
+								<a href="blog-detail.php" class="mtext-101 cl2 hov-cl1 trans-04">
 									5 tendências de moda do inverno à primavera para você experimentar.
 								</a>
 							</h4>

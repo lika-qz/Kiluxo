@@ -1,6 +1,37 @@
 <?php
 session_start();
-require_once __DIR__ . '/listaProdutos.php';
+require_once 'listaProdutos.php';
+
+// Garantir carrinho na sessão
+if (!isset($_SESSION['carrinho'])) {
+	$_SESSION['carrinho'] = [];
+}
+
+// Calcular total
+$total = 0;
+foreach ($_SESSION['carrinho'] as $item) {
+	$total += ($item['preco'] ?? 0) * ($item['quantidade'] ?? 1);
+}
+
+// Pegar o ID do produto via GET
+if (isset($_GET['id'])) {
+	$id = $_GET['id'];
+
+	// Buscar produto com base no ID
+	$produtoSelecionado = null;
+	foreach ($produtos as $produto) {
+		if ($produto['id'] == $id) {
+			$produtoSelecionado = $produto;
+			break;
+		}
+	}
+
+	if (!$produtoSelecionado) {
+		die("<h2>Produto não encontrado.</h2>");
+	}
+} else {
+	die("<h2>ID do produto não foi fornecido.</h2>");
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 	$id = (int) $_POST['id'];
@@ -46,6 +77,7 @@ if (isset($_SESSION['carrinho'])) {
 	}
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -74,6 +106,24 @@ if (isset($_SESSION['carrinho'])) {
 	<!-- Estilos customizados -->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+
+	<!-- Scripts -->
+	<script>
+		function abrirModal(id) {
+			$('.wrap-modal1').hide();
+			$('#modal-' + id).show();
+			$('.overlay-modal1').show();
+		}
+
+		document.addEventListener('DOMContentLoaded', function () {
+			document.querySelectorAll('.js-hide-modal1').forEach(btn => {
+				btn.addEventListener('click', () => {
+					btn.closest('.wrap-modal1').style.display = 'none';
+					$('.overlay-modal1').hide();
+				});
+			});
+		});
+	</script>
 </head>
 
 
@@ -164,7 +214,6 @@ if (isset($_SESSION['carrinho'])) {
 					data-notify="<?= $totalItensCarrinho ?>">
 					<i class="zmdi zmdi-shopping-cart"></i>
 				</div>
-
 
 				<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
@@ -359,12 +408,14 @@ if (isset($_SESSION['carrinho'])) {
 
 		<div class="header-cart flex-col-l p-l-65 p-r-25">
 			<div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2">Seu Carrinho</span>
+				<span class="mtext-103 cl2">
+					Seu Carrinho
+				</span>
+
 				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
 					<i class="zmdi zmdi-close"></i>
 				</div>
 			</div>
-
 			<ul class="list-unstyled">
 				<?php foreach ($_SESSION['carrinho'] as $item): ?>
 					<li class="d-flex align-items-center mb-3 border-bottom pb-3">
@@ -392,90 +443,106 @@ if (isset($_SESSION['carrinho'])) {
 					</a>
 				</li>
 			</ul>
-
-
 		</div>
 	</div>
 
-
-
-	<!-- Product -->
-	<div class="bg0 m-t-23 p-b-140">
-		<div class="container mt-5">
-
-			<!-- FILTRO DE CATEGORIAS -->
-			<div class="flex-w flex-sb-m p-b-52">
-				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1 category-btn"
-						data-filter="*">
-						Todos os produtos
-					</button>
-					<?php
-					$categorias = array_unique(array_column($produtos, 'categoria'));
-					foreach ($categorias as $categoria):
-						?>
-						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 category-btn"
-							data-filter=".<?= $categoria ?>">
-							<?= ucfirst($categoria) ?>
-						</button>
-					<?php endforeach; ?>
+	<div class="container p-t-80 p-b-50">
+		<div class="card shadow-sm border-0 rounded">
+			<div class="row no-gutters">
+				<!-- Imagem -->
+				<div class="col-md-6">
+					<img src="images/<?= $produtoSelecionado['imagem'] ?>" class="img-fluid rounded-left"
+						alt="<?= $produtoSelecionado['nome'] ?>">
 				</div>
-			</div>
 
-			<!-- LISTA DE PRODUTOS -->
+				<!-- Detalhes -->
+				<div class="col-md-6 p-4">
+					<h2 class="mtext-105 mb-3"><?= $produtoSelecionado['nome'] ?></h2>
+					<p class="text-muted"><?= $produtoSelecionado['descricao'] ?></p>
+					<h4 class="text-primary mt-3">R$ <?= number_format($produtoSelecionado['preco'], 2, ',', '.') ?>
+					</h4>
 
-			<div class="row isotope-grid">
-				<?php foreach ($produtos as $produto): ?>
-					<div
-						class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item <?= htmlspecialchars($produto['categoria']) ?>">
-						<div class="card mb-4 h-100 d-flex flex-column">
-							<img src="images/<?= htmlspecialchars($produto['imagem']) ?>" class="card-img-top"
-								alt="<?= htmlspecialchars($produto['nome']) ?>">
+					<?php
+					$mapaCores = [
+						'azul' => '#007bff',
+						'vermelho' => '#dc3545',
+						'verde' => '#28a745',
+						'preto' => '#000000',
+						'branco' => '#ffffff',
+						'amarelo' => '#ffc107',
+						'rosa' => '#e83e8c',
+					];
+					?>
 
-							<div class="card-body d-flex flex-column">
-								<h5 class="card-title"><?= htmlspecialchars($produto['nome']) ?></h5>
-								<p class="product-price mb-3">R$<?= number_format($produto['preco'], 2, ',', '.') ?></p>
+					<form action="adicionar_carrinho.php" method="post" class="mt-4">
+						<input type="hidden" name="id" value="<?= $produtoSelecionado['id'] ?>">
+						<input type="hidden" name="nome" value="<?= $produtoSelecionado['nome'] ?>">
+						<input type="hidden" name="preco" value="<?= $produtoSelecionado['preco'] ?>">
+						<input type="hidden" name="imagem" value="<?= $produtoSelecionado['imagem'] ?>">
+						<input type="hidden" name="descricao" value="<?= $produtoSelecionado['descricao'] ?>">
 
-								<div class="mt-auto">
-									<div class="d-flex flex-column gap-2">
-										<a href="./detalhesProduto.php?id=<?= $produto['id'] ?>"
-											class="btn btn-sm btn-outline-secondary w-100 mb-2">
-											Detalhes
-										</a>
-										<!-- Formulário Adicionar -->
-										<form action="" method="post" class="w-100">
-											<input type="hidden" name="id" value="<?= $produto['id'] ?>">
-											<input type="hidden" name="nome"
-												value="<?= htmlspecialchars($produto['nome']) ?>">
-											<input type="hidden" name="preco" value="<?= $produto['preco'] ?>">
-											<input type="hidden" name="imagem"
-												value="images/<?= htmlspecialchars($produto['imagem']) ?>">
-											<input type="hidden" name="descricao"
-												value="<?= htmlspecialchars($produto['descricao']) ?>">
-											<input type="hidden" name="quantidade" value="1">
+						<!-- Tamanhos -->
+						<?php if (!empty($produtoSelecionado['tamanhos'])): ?>
+							<div class="form-group mt-4">
+								<label><strong>Tamanho:</strong></label>
+								<div class="btn-group btn-group-toggle d-flex flex-wrap gap-2 mt-2" data-toggle="buttons">
+									<?php foreach ($produtoSelecionado['tamanhos'] as $tamanho): ?>
+										<label class="btn btn-outline-secondary rounded-circle text-uppercase px-3 py-2">
+											<input type="radio" name="tamanho" value="<?= $tamanho ?>" required> <?= $tamanho ?>
+										</label>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						<?php endif; ?>
 
-											<button type="submit" class="btn btn-sm btn-primary w-100">
-												<i class="zmdi zmdi-shopping-cart me-1"></i> Adicionar
-											</button>
-										</form>
+						<!-- Cores -->
+						<?php if (!empty($produtoSelecionado['cores'])): ?>
+							<div class="form-group mt-3">
+								<label><strong>Cor:</strong></label>
+								<div class="d-flex flex-wrap gap-3 mt-2">
+									<?php foreach ($produtoSelecionado['cores'] as $cor): ?>
+										<?php
+										$corCss = isset($mapaCores[strtolower($cor)]) ? $mapaCores[strtolower($cor)] : '#ccc';
+										?>
+										<label class="d-inline-block position-relative">
+											<input type="radio" name="cor" value="<?= $cor ?>" class="d-none" required>
+											<span class="rounded-circle border"
+												style="width: 35px; height: 35px; background-color: <?= $corCss ?>; display: inline-block; cursor: pointer;"></span>
+										</label>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						<?php endif; ?>
 
-									</div>
+						<!-- Quantidade -->
+						<div class="form-group mt-4">
+							<label for="quantidade"><strong>Quantidade:</strong></label>
+							<div class="input-group w-50">
+								<div class="input-group-prepend">
+									<button type="button" class="btn btn-outline-secondary"
+										onclick="alterarQuantidade(-1)">−</button>
+								</div>
+								<input type="number" name="quantidade" id="quantidade" value="1" min="1"
+									class="form-control text-center" required>
+								<div class="input-group-append">
+									<button type="button" class="btn btn-outline-secondary"
+										onclick="alterarQuantidade(1)">+</button>
 								</div>
 							</div>
 						</div>
-					</div>
-				<?php endforeach; ?>
-			</div>
 
-			<!-- Load more -->
-			<div class="flex-c-m flex-w w-full p-t-45">
-				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Carregar mais
-				</a>
+
+						<!-- Botão -->
+						<button type="submit" class="btn btn-success btn-lg mt-3">
+							<i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
+
+
 	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
@@ -622,125 +689,135 @@ if (isset($_SESSION['carrinho'])) {
 			</div>
 		</div>
 	</footer>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-	<script>
-		$(document).ready(function () {
-			var $grid = $('.isotope-grid').isotope({
-				itemSelector: '.isotope-item',
-				layoutMode: 'fitRows'
-			});
-
-			$('.filter-tope-group button').on('click', function () {
-				$('.filter-tope-group button').removeClass('how-active1');
-				$(this).addClass('how-active1');
-				var filterValue = $(this).attr('data-filter');
-				$grid.isotope({ filter: filterValue });
-			});
-		});
-	</script>
-	<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-	<script>
-		$(".js-select2").each(function () {
-			$(this).select2({
-				minimumResultsForSearch: 20,
-				dropdownParent: $(this).next('.dropDownSelect2')
-			});
-		})
-	</script>
-	<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/slick/slick.min.js"></script>
-	<script src="js/slick-custom.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/parallax100/parallax100.js"></script>
-	<script>
-		$('.parallax100').parallax100();
-	</script>
-	<!--===============================================================================================-->
-	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-	<script>
-		$('.gallery-lb').each(function () { // the containers for all your galleries
-			$(this).magnificPopup({
-				delegate: 'a', // the selector for gallery item
-				type: 'image',
-				gallery: {
-					enabled: true
-				},
-				mainClass: 'mfp-fade'
-			});
-		});
-	</script>
-	<!--===============================================================================================-->
-	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/sweetalert/sweetalert.min.js"></script>
-	<script>
-		$('.js-addwish-b2, .js-addwish-detail').on('click', function (e) {
-			e.preventDefault();
-		});
-
-		$('.js-addwish-b2').each(function () {
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').php();
-			$(this).on('click', function () {
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
-			});
-		});
-
-		$('.js-addwish-detail').each(function () {
-			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').php();
-
-			$(this).on('click', function () {
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-detail');
-				$(this).off('click');
-			});
-		});
-
-		/*---------------------------------------------*/
-
-		$('.js-addcart-detail').each(function () {
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').php();
-			$(this).on('click', function () {
-				swal(nameProduct, "is added to cart !", "success");
-			});
-		});
-
-	</script>
-	<!--===============================================================================================-->
-	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script>
-		$('.js-pscroll').each(function () {
-			$(this).css('position', 'relative');
-			$(this).css('overflow', 'hidden');
-			var ps = new PerfectScrollbar(this, {
-				wheelSpeed: 1,
-				scrollingThreshold: 1000,
-				wheelPropagation: false,
-			});
-
-			$(window).on('resize', function () {
-				ps.update();
-			})
-		});
-	</script>
-	<!--===============================================================================================-->
-	<script src="js/main.js"></script>
 
 </body>
+<script>
+	function alterarQuantidade(valor) {
+		const input = document.getElementById('quantidade');
+		let atual = parseInt(input.value) || 1;
+		atual += valor;
+		if (atual < 1) atual = 1;
+		input.value = atual;
+	}
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script>
+	$(document).ready(function () {
+		var $grid = $('.isotope-grid').isotope({
+			itemSelector: '.isotope-item',
+			layoutMode: 'fitRows'
+		});
+
+		$('.filter-tope-group button').on('click', function () {
+			$('.filter-tope-group button').removeClass('how-active1');
+			$(this).addClass('how-active1');
+			var filterValue = $(this).attr('data-filter');
+			$grid.isotope({ filter: filterValue });
+		});
+	});
+</script>
+<!--===============================================================================================-->
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/select2/select2.min.js"></script>
+<script>
+	$(".js-select2").each(function () {
+		$(this).select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $(this).next('.dropDownSelect2')
+		});
+	})
+</script>
+<!--===============================================================================================-->
+<script src="vendor/daterangepicker/moment.min.js"></script>
+<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/slick/slick.min.js"></script>
+<script src="js/slick-custom.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/parallax100/parallax100.js"></script>
+<script>
+	$('.parallax100').parallax100();
+</script>
+<!--===============================================================================================-->
+<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<script>
+	$('.gallery-lb').each(function () { // the containers for all your galleries
+		$(this).magnificPopup({
+			delegate: 'a', // the selector for gallery item
+			type: 'image',
+			gallery: {
+				enabled: true
+			},
+			mainClass: 'mfp-fade'
+		});
+	});
+</script>
+<!--===============================================================================================-->
+<script src="vendor/isotope/isotope.pkgd.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/sweetalert/sweetalert.min.js"></script>
+<script>
+	$('.js-addwish-b2, .js-addwish-detail').on('click', function (e) {
+		e.preventDefault();
+	});
+
+	$('.js-addwish-b2').each(function () {
+		var nameProduct = $(this).parent().parent().find('.js-name-b2').php();
+		$(this).on('click', function () {
+			swal(nameProduct, "is added to wishlist !", "success");
+
+			$(this).addClass('js-addedwish-b2');
+			$(this).off('click');
+		});
+	});
+
+	$('.js-addwish-detail').each(function () {
+		var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').php();
+
+		$(this).on('click', function () {
+			swal(nameProduct, "is added to wishlist !", "success");
+
+			$(this).addClass('js-addedwish-detail');
+			$(this).off('click');
+		});
+	});
+
+	/*---------------------------------------------*/
+
+	$('.js-addcart-detail').each(function () {
+		var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').php();
+		$(this).on('click', function () {
+			swal(nameProduct, "is added to cart !", "success");
+		});
+	});
+
+</script>
+<!--===============================================================================================-->
+<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script>
+	$('.js-pscroll').each(function () {
+		$(this).css('position', 'relative');
+		$(this).css('overflow', 'hidden');
+		var ps = new PerfectScrollbar(this, {
+			wheelSpeed: 1,
+			scrollingThreshold: 1000,
+			wheelPropagation: false,
+		});
+
+		$(window).on('resize', function () {
+			ps.update();
+		})
+	});
+</script>
+<!--===============================================================================================-->
+<script src="js/main.js"></script>
+
 
 </html>

@@ -27,18 +27,18 @@
 		<div class="container-menu-desktop trans-03">
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop p-l-45">	
-					<a href="index.html" class="logo">
+					<a href="index.php" class="logo">
 						<img src="images/logo.png" alt="IMG-LOGO">
 					</a>
 
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="index.html">Home</a>
+								<a href="index.php">Home</a>
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="product.php">Shop</a>
 							</li>
 
 							<li class="label1 active-menu" data-label1="New">
@@ -46,15 +46,15 @@
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+								<a href="blog.php">Blog</a>
 							</li>
 
 							<li>
-								<a href="about.html">Sobre nós</a>
+								<a href="about.php">Sobre nós</a>
 							</li>
 
 							<li>
-								<a href="contact.html">Contatos</a>
+								<a href="contact.php">Contatos</a>
 							</li>
 						</ul>
 					</div>	
@@ -75,7 +75,7 @@
 
 						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-								<a href="cadastrar.html" style="color: rgb(49, 49, 49);"><i class="bi bi-person-fill-add"></i></a>
+								<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i class="bi bi-person-fill-add"></i></a>
 							</div>
 						</div>
 							
@@ -92,7 +92,7 @@
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">	
 			<div class="logo-mobile">
-				<a href="index.html"><img src="images/logo.png" alt="IMG-LOGO"></a>
+				<a href="index.php"><img src="images/logo.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
@@ -110,7 +110,7 @@
 
 				<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
 					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-						<a href="cadastrar.html" style="color: rgb(49, 49, 49);"><i class="bi bi-person-fill-add"></i></a>
+						<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i class="bi bi-person-fill-add"></i></a>
 					</div>
 				</div>
 
@@ -129,11 +129,11 @@
 		<div class="menu-mobile">
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="index.php">Home</a>
 				</li>
 
 				<li>
-					<a href="product.html">Shop</a>
+					<a href="product.php">Shop</a>
 				</li>
 
 				<li>
@@ -141,15 +141,15 @@
 				</li>
 
 				<li>
-					<a href="blog.html">Blog</a>
+					<a href="blog.php">Blog</a>
 				</li>
 
 				<li>
-					<a href="about.html">Sobre nós</a>
+					<a href="about.php">Sobre nós</a>
 				</li>
 
 				<li>
-					<a href="contact.html">Contatos</a>
+					<a href="contact.php">Contatos</a>
 				</li>
 			</ul>
 		</div>
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	<!-- breadcrumb -->
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
 				Home
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
