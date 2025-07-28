@@ -119,12 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 							</div>
 						</div>
 
-						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-								<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i
-										class="bi bi-person-fill-add"></i></a>
-							</div>
-						</div>
+						
 
 						<div class="flex-c-m h-full p-lr-19">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar">

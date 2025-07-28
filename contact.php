@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -71,19 +72,6 @@
 							</div>
 						</div>
 
-						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
-								data-notify="2">
-								<i class="zmdi zmdi-shopping-cart"></i>
-							</div>
-						</div>
-
-						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-								<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i
-										class="bi bi-person-fill-add"></i></a>
-							</div>
-						</div>
 
 						<div class="flex-c-m h-full p-lr-19">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
@@ -166,37 +154,7 @@
 				</form>
 			</div>
 		</div>
-		<script>
-			// Garante que o modal de busca só aparece ao clicar no ícone de busca
-			document.addEventListener('DOMContentLoaded', function () {
-				var modal = document.querySelector('.modal-search-header');
-				var showBtns = document.querySelectorAll('.js-show-modal-search');
-				var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
-
-				showBtns.forEach(function (btn) {
-					btn.addEventListener('click', function (e) {
-						e.preventDefault();
-						modal.style.display = 'flex';
-						var input = modal.querySelector('input');
-						if (input) input.focus();
-					});
-				});
-
-				hideBtns.forEach(function (btn) {
-					btn.addEventListener('click', function (e) {
-						e.preventDefault();
-						modal.style.display = 'none';
-					});
-				});
-
-				// Fecha o modal ao clicar fora do container
-				modal.addEventListener('click', function (e) {
-					if (e.target === modal) {
-						modal.style.display = 'none';
-					}
-				});
-			});
-		</script>
+		
 	</header>
 
 	<!-- Sidebar -->
@@ -322,92 +280,6 @@
 		</div>
 	</aside>
 
-	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart">
-		<div class="s-full js-hide-cart"></div>
-
-		<div class="header-cart flex-col-l p-l-65 p-r-25">
-			<div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2">
-					Your Cart
-				</span>
-
-				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-					<i class="zmdi zmdi-close"></i>
-				</div>
-			</div>
-
-			<div class="header-cart-content flex-w js-pscroll">
-				<ul class="header-cart-wrapitem w-full">
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="images/item-cart-01.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								White Shirt Pleat
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $19.00
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="images/item-cart-02.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Converse All Star
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $39.00
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="images/item-cart-03.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Nixon Porter Leather
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x $17.00
-							</span>
-						</div>
-					</li>
-				</ul>
-
-				<div class="w-full">
-					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
-					</div>
-
-					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.php"
-							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							View Cart
-						</a>
-
-						<a href="shoping-cart.php"
-							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Check Out
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
 	<!-- Title page -->
@@ -423,26 +295,43 @@
 		<div class="container">
 			<div class="flex-w flex-tr">
 				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-					<form>
+					<form onsubmit="enviarEmail(event)">
 						<h4 class="mtext-105 cl2 txt-center p-b-30">
 							Envie-nos uma mensagem
 						</h4>
 
 						<div class="bor8 m-b-20 how-pos4-parent">
-							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email"
-								placeholder="Seu Endereço de Email">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="email"
+								id="email" placeholder="Seu Endereço de Email" required>
 							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
 						</div>
 
 						<div class="bor8 m-b-30">
-							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg"
-								placeholder="Como podemos ajudar?"></textarea>
+							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" id="mensagem"
+								placeholder="Como podemos ajudar?" required></textarea>
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+						<button type="submit"
+							class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
 							Enviar
 						</button>
 					</form>
+
+					<script>
+						function enviarEmail(event) {
+							event.preventDefault();
+
+							const email = document.getElementById("email").value;
+							const mensagem = document.getElementById("mensagem").value;
+
+							const destinatario = "likaa.qz@gmail.com";
+							const assunto = encodeURIComponent("Mensagem do site");
+							const corpo = encodeURIComponent(`Email: ${email}\n\nMensagem:\n${mensagem}`);
+
+							window.location.href = `mailto:${destinatario}?subject=${assunto}&body=${corpo}`;
+						}
+					</script>
+
 				</div>
 
 				<div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
@@ -499,15 +388,6 @@
 			</div>
 		</div>
 	</section>
-
-
-	<!-- Map -->
-	<div class="map">
-		<div class="size-303" id="google_map" data-map-x="-4.0863411" data-map-y="-63.147009"
-			data-pin="images/icons/Kiluxo.png" data-scrollwhell="0" data-draggable="1" data-zoom="11"></div>
-	</div>
-
-
 
 	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
@@ -706,7 +586,37 @@
 	<script src="js/map-custom.js"></script>
 	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
+	<script>
+			// Garante que o modal de busca só aparece ao clicar no ícone de busca
+			document.addEventListener('DOMContentLoaded', function () {
+				var modal = document.querySelector('.modal-search-header');
+				var showBtns = document.querySelectorAll('.js-show-modal-search');
+				var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
 
+				showBtns.forEach(function (btn) {
+					btn.addEventListener('click', function (e) {
+						e.preventDefault();
+						modal.style.display = 'flex';
+						var input = modal.querySelector('input');
+						if (input) input.focus();
+					});
+				});
+
+				hideBtns.forEach(function (btn) {
+					btn.addEventListener('click', function (e) {
+						e.preventDefault();
+						modal.style.display = 'none';
+					});
+				});
+
+				// Fecha o modal ao clicar fora do container
+				modal.addEventListener('click', function (e) {
+					if (e.target === modal) {
+						modal.style.display = 'none';
+					}
+				});
+			});
+		</script>
 </body>
 
 </html>
