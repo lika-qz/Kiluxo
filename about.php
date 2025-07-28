@@ -69,17 +69,7 @@
 							</div>
 						</div>
 							
-						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-								<i class="zmdi zmdi-shopping-cart"></i>
-							</div>
-						</div>
-
-						<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-								<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i class="bi bi-person-fill-add"></i></a>
-							</div>
-						</div>
+						
 							
 						<div class="flex-c-m h-full p-lr-19">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
@@ -101,18 +91,6 @@
 				<div class="flex-c-m h-full p-r-10">
 					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
 						<i class="zmdi zmdi-search"></i>
-					</div>
-				</div>
-
-				<div class="flex-c-m h-full p-lr-10 bor5">
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-						<i class="zmdi zmdi-shopping-cart"></i>
-					</div>
-				</div>
-
-				<div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show">
-						<a href="cadastrar.php" style="color: rgb(49, 49, 49);"><i class="bi bi-person-fill-add"></i></a>
 					</div>
 				</div>
 
