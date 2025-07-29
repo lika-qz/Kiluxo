@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -46,7 +45,19 @@
 								<a href="product.php">Shop</a>
 							</li>
 
-							<li class="label1" data-label1="New">
+							<li class="label1" <?php
+							session_start();
+
+							$totalItensCarrinho = 0;
+
+							if (isset($_SESSION['carrinho'])) {
+								foreach ($_SESSION['carrinho'] as $item) {
+									$totalItensCarrinho += $item['quantidade'];
+								}
+							}
+
+							echo 'data-label1="' . ($totalItensCarrinho > 0 ? $totalItensCarrinho : '') . '"';
+							?>>
 								<a href="shoping-cart.php">Carrinho</a>
 							</li>
 
@@ -119,7 +130,25 @@
 				</li>
 
 				<li>
-					<a href="shoping-cart.php" class="label1 rs1" data-label1="New">Carrinho</a>
+					<a href="shoping-cart.php">
+						Carrinho
+						<?php
+
+						// Inicialize a contagem
+						$totalItensCarrinho = 0;
+
+						if (isset($_SESSION['carrinho'])) {
+							foreach ($_SESSION['carrinho'] as $item) {
+								$totalItensCarrinho += $item['quantidade'];
+							}
+						}
+
+						// Exibe o número se houver itens
+						if ($totalItensCarrinho > 0) {
+							echo " (<span style='color: white;'>$totalItensCarrinho</span>)";
+						}
+						?>
+					</a>
 				</li>
 
 				<li>
@@ -154,7 +183,7 @@
 				</form>
 			</div>
 		</div>
-		
+
 	</header>
 
 	<!-- Sidebar -->
@@ -587,36 +616,36 @@
 	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
 	<script>
-			// Garante que o modal de busca só aparece ao clicar no ícone de busca
-			document.addEventListener('DOMContentLoaded', function () {
-				var modal = document.querySelector('.modal-search-header');
-				var showBtns = document.querySelectorAll('.js-show-modal-search');
-				var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
+		// Garante que o modal de busca só aparece ao clicar no ícone de busca
+		document.addEventListener('DOMContentLoaded', function () {
+			var modal = document.querySelector('.modal-search-header');
+			var showBtns = document.querySelectorAll('.js-show-modal-search');
+			var hideBtns = document.querySelectorAll('.js-hide-modal-search, .btn-hide-modal-search');
 
-				showBtns.forEach(function (btn) {
-					btn.addEventListener('click', function (e) {
-						e.preventDefault();
-						modal.style.display = 'flex';
-						var input = modal.querySelector('input');
-						if (input) input.focus();
-					});
-				});
-
-				hideBtns.forEach(function (btn) {
-					btn.addEventListener('click', function (e) {
-						e.preventDefault();
-						modal.style.display = 'none';
-					});
-				});
-
-				// Fecha o modal ao clicar fora do container
-				modal.addEventListener('click', function (e) {
-					if (e.target === modal) {
-						modal.style.display = 'none';
-					}
+			showBtns.forEach(function (btn) {
+				btn.addEventListener('click', function (e) {
+					e.preventDefault();
+					modal.style.display = 'flex';
+					var input = modal.querySelector('input');
+					if (input) input.focus();
 				});
 			});
-		</script>
+
+			hideBtns.forEach(function (btn) {
+				btn.addEventListener('click', function (e) {
+					e.preventDefault();
+					modal.style.display = 'none';
+				});
+			});
+
+			// Fecha o modal ao clicar fora do container
+			modal.addEventListener('click', function (e) {
+				if (e.target === modal) {
+					modal.style.display = 'none';
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>

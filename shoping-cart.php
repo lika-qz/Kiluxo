@@ -110,7 +110,18 @@ foreach ($_SESSION['carrinho'] as $item) {
 								<a href="product.php">Shop</a>
 							</li>
 
-							<li class="label1 active-menu" data-label1="New">
+							<li class="label1" <?php
+
+							$totalItensCarrinho = 0;
+
+							if (isset($_SESSION['carrinho'])) {
+								foreach ($_SESSION['carrinho'] as $item) {
+									$totalItensCarrinho += $item['quantidade'];
+								}
+							}
+
+							echo 'data-label1="' . ($totalItensCarrinho > 0 ? $totalItensCarrinho : '') . '"';
+							?>>
 								<a href="shoping-cart.php">Carrinho</a>
 							</li>
 
@@ -159,7 +170,7 @@ foreach ($_SESSION['carrinho'] as $item) {
 					</div>
 				</div>
 
-				
+
 
 			</div>
 
@@ -184,9 +195,26 @@ foreach ($_SESSION['carrinho'] as $item) {
 				</li>
 
 				<li>
-					<a href="shoping-cart.php" class="label1 rs1" data-label1="New">Carrinho</a>
-				</li>
+					<a href="shoping-cart.php">
+						Carrinho
+						<?php
 
+						// Inicialize a contagem
+						$totalItensCarrinho = 0;
+
+						if (isset($_SESSION['carrinho'])) {
+							foreach ($_SESSION['carrinho'] as $item) {
+								$totalItensCarrinho += $item['quantidade'];
+							}
+						}
+
+						// Exibe o número se houver itens
+						if ($totalItensCarrinho > 0) {
+							echo " (<span style='color: white;'>$totalItensCarrinho</span>)";
+						}
+						?>
+					</a>
+				</li>
 				<li>
 					<a href="blog.php">Blog</a>
 				</li>
@@ -330,11 +358,12 @@ foreach ($_SESSION['carrinho'] as $item) {
 
 						</div>
 
-						<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+						<div
+							class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
 							<a href="shoping-cart.php">Atualizar carrinho</a>
 						</div>
-						
-						
+
+
 					</div>
 				</div>
 

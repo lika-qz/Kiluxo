@@ -44,7 +44,19 @@
 								<a href="product.php">Shop</a>
 							</li>
 
-							<li class="label1" data-label1="New">
+							<li class="label1" <?php
+							session_start();
+
+							$totalItensCarrinho = 0;
+
+							if (isset($_SESSION['carrinho'])) {
+								foreach ($_SESSION['carrinho'] as $item) {
+									$totalItensCarrinho += $item['quantidade'];
+								}
+							}
+
+							echo 'data-label1="' . ($totalItensCarrinho > 0 ? $totalItensCarrinho : '') . '"';
+							?>>
 								<a href="shoping-cart.php">Carrinho</a>
 							</li>
 
@@ -119,8 +131,26 @@
 					<a href="product.php">Shop</a>
 				</li>
 
-				<li>
-					<a href="shoping-cart.php" class="label1 rs1" data-label1="New">Carrinho</a>
+				<li >
+					<a href="shoping-cart.php">
+						Carrinho
+						<?php
+
+						// Inicialize a contagem
+						$totalItensCarrinho = 0;
+
+						if (isset($_SESSION['carrinho'])) {
+							foreach ($_SESSION['carrinho'] as $item) {
+								$totalItensCarrinho += $item['quantidade'];
+							}
+						}
+
+						// Exibe o número se houver itens
+						if ($totalItensCarrinho > 0) {
+							echo " (<span style='color: white;'>$totalItensCarrinho</span>)";
+						}
+						?>
+					</a>
 				</li>
 
 				<li>
