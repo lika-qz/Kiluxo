@@ -4,7 +4,33 @@ if (!isset($_SESSION['usuario_logado'])) {
     header('Location: index.php');
     exit;
 }
+
+require_once '../vendor/php/conexao.php';
+
+// Total de vendas hoje
+$stmtHoje = $pdo->prepare("SELECT SUM(total) AS total_hoje FROM pedidos WHERE DATE(criado_em) = CURDATE() AND status = 'Pago'");
+$stmtHoje->execute();
+$totalHoje = $stmtHoje->fetchColumn() ?? 0;
+
+// Total de pedidos
+$stmtPedidos = $pdo->query("SELECT COUNT(*) FROM pedidos");
+$totalPedidos = $stmtPedidos->fetchColumn() ?? 0;
+
+// Lucro do mês
+$stmtMes = $pdo->prepare("SELECT SUM(total) FROM pedidos WHERE MONTH(criado_em) = MONTH(CURRENT_DATE()) AND YEAR(criado_em) = YEAR(CURRENT_DATE()) AND status = 'Pago'");
+$stmtMes->execute();
+$lucroMes = $stmtMes->fetchColumn() ?? 0;
+
+// Lucro da semana (últimos 7 dias)
+$stmtSemana = $pdo->prepare("SELECT SUM(total) FROM pedidos WHERE criado_em >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND status = 'Pago'");
+$stmtSemana->execute();
+$lucroSemana = $stmtSemana->fetchColumn() ?? 0;
+
+// Últimos pedidos
+$stmtRecentes = $pdo->query("SELECT * FROM pedidos ORDER BY criado_em DESC LIMIT 5");
+$pedidosRecentes = $stmtRecentes->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -27,7 +53,7 @@ if (!isset($_SESSION['usuario_logado'])) {
     <nav class="navbar navbar-main navbar-expand-lg fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../images/logo.png"  class="navbar-logo">
+                <img src="../images/logo.png" class="navbar-logo">
             </a>
 
             <div class="d-flex align-items-center">
@@ -76,7 +102,7 @@ if (!isset($_SESSION['usuario_logado'])) {
 
             <div class="divider"></div>
 
-            
+
             <li class="nav-item">
                 <a class="nav-link" href="../vendor/php/logout.php">
                     <i class="bi bi-box-arrow-right"></i>
@@ -98,9 +124,9 @@ if (!isset($_SESSION['usuario_logado'])) {
                         <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div>
-                        <div class="stat-value">R$ 8.245</div>
+                        <div class="stat-value">R$ <?= number_format($totalHoje, 2, ',', '.') ?></div>
                         <div class="stat-label">Vendas Hoje</div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -112,9 +138,9 @@ if (!isset($_SESSION['usuario_logado'])) {
                         <i class="bi bi-cart-check"></i>
                     </div>
                     <div>
-                        <div class="stat-value">187</div>
+                        <div class="stat-value"><?= $totalPedidos ?></div>
                         <div class="stat-label">Pedidos</div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -126,9 +152,9 @@ if (!isset($_SESSION['usuario_logado'])) {
                         <i class="bi bi-graph-up-arrow"></i>
                     </div>
                     <div>
-                        <div class="stat-value">R$ 23.150</div>
+                        <div class="stat-value">R$ <?= number_format($lucroMes, 2, ',', '.') ?></div>
                         <div class="stat-label">Lucro do Mês</div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -140,9 +166,9 @@ if (!isset($_SESSION['usuario_logado'])) {
                         <i class="bi-cash-stack"></i>
                     </div>
                     <div>
-                        <div class="stat-value">R$ 1.245</div>
+                        <div class="stat-value">R$ <?= number_format($lucroSemana, 2, ',', '.') ?></div>
                         <div class="stat-label">Lucro da Semana</div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -168,67 +194,29 @@ if (!isset($_SESSION['usuario_logado'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#KLX-7842</td>
-                            <td>Marcos Silva</td>
-                            <td>30/07/2025</td>
-                            <td>R$ 245,90</td>
-                            <td><span class="badge badge-completed">Completo</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#KLX-7841</td>
-                            <td>Ana Costa</td>
-                            <td>30/07/2025</td>
-                            <td>R$ 128,50</td>
-                            <td><span class="badge badge-completed">Completo</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#KLX-7840</td>
-                            <td>Carlos Oliveira</td>
-                            <td>29/07/2025</td>
-                            <td>R$ 89,90</td>
-                            <td><span class="badge badge-completed">Completo</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#KLX-7839</td>
-                            <td>Juliana Mendes</td>
-                            <td>29/07/2025</td>
-                            <td>R$ 342,20</td>
-                            <td><span class="badge badge-pending">Pendente</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#KLX-7838</td>
-                            <td>Ricardo Almeida</td>
-                            <td>28/07/2025</td>
-                            <td>R$ 156,75</td>
-                            <td><span class="badge badge-completed">Completo</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        <?php foreach ($pedidosRecentes as $pedido): ?>
+                            <tr>
+                                <td>#KLX-<?= str_pad($pedido['id'], 4, '0', STR_PAD_LEFT) ?></td>
+                                <td><?= htmlspecialchars($pedido['nome_cliente']) ?></td>
+                                <td><?= date('d/m/Y', strtotime($pedido['criado_em'])) ?></td>
+                                <td>R$ <?= number_format($pedido['total'], 2, ',', '.') ?></td>
+                                <td>
+                                    <span class="badge 
+                <?= $pedido['status'] === 'Pago' ? 'bg-success' :
+                    ($pedido['status'] === 'Pendente' ? 'bg-warning' :
+                        ($pedido['status'] === 'Cancelado' ? 'bg-danger' : 'bg-secondary')) ?>">
+                                        <?= htmlspecialchars($pedido['status']) ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="vendas.php#pedido-<?= $pedido['id'] ?>" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
+
                 </table>
             </div>
         </div>
