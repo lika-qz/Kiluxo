@@ -1,3 +1,11 @@
+<?php
+require_once "vendor/php/conexao.php";
+
+
+// Consulta para buscar os 4 primeiros produtos
+$stmt = $pdo->query("SELECT id, nome, preco, imagem FROM produtos ORDER BY id DESC LIMIT 4");
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -44,7 +52,9 @@
 							</li>
 
 							<li class="label1" <?php
-							session_start();
+							if (session_status() === PHP_SESSION_NONE) {
+								session_start();
+							}
 
 							$totalItensCarrinho = 0;
 
@@ -58,6 +68,7 @@
 							?>>
 								<a href="shoping-cart.php">Carrinho</a>
 							</li>
+
 
 							<li>
 								<a href="blog.php">Blog</a>
@@ -127,26 +138,18 @@
 					<a href="product.php">Shop</a>
 				</li>
 
-				<li>
-					<a href="shoping-cart.php">
-						Carrinho
-						<?php
+				<?php
+				$totalItensCarrinho = 0;
 
-						// Inicialize a contagem
-						$totalItensCarrinho = 0;
+				if (!empty($_SESSION['carrinho'])) {
+					foreach ($_SESSION['carrinho'] as $item) {
+						$totalItensCarrinho += $item['quantidade'];
+					}
+				}
+				?>
 
-						if (isset($_SESSION['carrinho'])) {
-							foreach ($_SESSION['carrinho'] as $item) {
-								$totalItensCarrinho += $item['quantidade'];
-							}
-						}
-
-						// Exibe o número se houver itens
-						if ($totalItensCarrinho > 0) {
-							echo " (<span style='color: white;'>$totalItensCarrinho</span>)";
-						}
-						?>
-					</a>
+				<li class="label1" <?= $totalItensCarrinho > 0 ? 'data-label1="' . $totalItensCarrinho . '"' : '' ?>>
+					<a href="shoping-cart.php">Carrinho</a>
 				</li>
 
 				<li>
@@ -600,29 +603,21 @@
 			</div>
 			<!-- Tab panes -->
 			<div class="tab-content p-t-50">
-				<!-- - -->
 				<div class="tab-pane fade show active" id="best-seller" role="tabpanel">
 					<!-- Slide2 -->
 					<div class="wrap-slick2">
 						<div class="slick2">
-							<?php
-							require_once 'listaProdutos.php';
-
-							$contador = 0;
-							foreach ($produtos as $produto) {
-								if ($contador >= 4)
-									break;
-
+							<?php foreach ($produtos as $produto):
 								$nome = htmlspecialchars($produto['nome']);
 								$preco = number_format($produto['preco'], 2, ',', '.');
 								$imagem = htmlspecialchars($produto['imagem']);
-								$id = $produto['id'];
+								$id = (int) $produto['id'];
 								?>
 								<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
 									<!-- Block2 -->
 									<div class="block2">
 										<div class="block2-pic hov-img0">
-											<img src="images/<?= $imagem ?>" alt="<?= $nome ?>">
+											<img src="vendor/uploads/<?= $imagem ?>" alt="<?= $nome ?>">
 
 											<a href="detalhesProduto.php?id=<?= $id ?>"
 												class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
@@ -653,16 +648,11 @@
 										</div>
 									</div>
 								</div>
-								<?php
-								$contador++;
-							}
-							?>
+							<?php endforeach; ?>
 						</div>
 					</div>
 				</div>
 			</div>
-
-		</div>
 		</div>
 	</section>
 

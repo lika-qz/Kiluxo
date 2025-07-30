@@ -49,7 +49,7 @@ if (!isset($_SESSION['usuario_logado'])) {
                         class="bi bi-box-seam"></i><span>Produtos</span></a></li>
             <li class="nav-item"><a class="nav-link" href="usuarios.php"><i
                         class="bi bi-people"></i><span>Usuários</span></a></li>
-            
+
             <div class="divider"></div>
             <li class="nav-item"><a class="nav-link" href="../vendor/php/logout.php"><i
                         class="bi bi-box-arrow-right"></i><span>Sair</span></a></li>
@@ -81,9 +81,23 @@ if (!isset($_SESSION['usuario_logado'])) {
                 </div>
 
                 <div class="col-md-6">
-                    <label for="cor" class="form-label">Cor</label>
-                    <select name="cor" class="form-select" required>
-                        <option value="" disabled selected>Selecione a cor</option>
+                    <label for="tamanhos" class="form-label">Tamanhos Disponíveis</label>
+                    <select name="tamanhos[]" class="form-select" multiple required>
+                        <option value="único">Tamanho Único</option>
+                        <option value="PP">PP</option>
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                        <option value="GG">GG</option>
+                        <option value="XG">XG</option>
+                    </select>
+                    <small class="form-text text-muted">Segure Ctrl (ou Command no Mac) para selecionar múltiplos
+                        tamanhos.</small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="cores" class="form-label">Cores Disponíveis</label>
+                    <select name="cores[]" class="form-select" multiple required>
                         <option value="Preto">Preto</option>
                         <option value="Branco">Branco</option>
                         <option value="Vermelho">Vermelho</option>
@@ -94,7 +108,10 @@ if (!isset($_SESSION['usuario_logado'])) {
                         <option value="Rosa">Rosa</option>
                         <option value="Cinza">Cinza</option>
                     </select>
+                    <small class="form-text text-muted">Segure Ctrl (ou Command no Mac) para selecionar várias
+                        cores.</small>
                 </div>
+
 
                 <div class="col-md-6">
                     <label for="preco" class="form-label">Preço (R$)</label>

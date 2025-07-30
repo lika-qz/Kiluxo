@@ -100,9 +100,7 @@ if (!isset($_SESSION['usuario_logado'])) {
                     <div>
                         <div class="stat-value">R$ 8.245</div>
                         <div class="stat-label">Vendas Hoje</div>
-                        <div class="stat-change change-up">
-                            <i class="bi bi-arrow-up"></i> 12.4% desde ontem
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -116,9 +114,7 @@ if (!isset($_SESSION['usuario_logado'])) {
                     <div>
                         <div class="stat-value">187</div>
                         <div class="stat-label">Pedidos</div>
-                        <div class="stat-change change-up">
-                            <i class="bi bi-arrow-up"></i> 5.2% desde ontem
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -132,9 +128,7 @@ if (!isset($_SESSION['usuario_logado'])) {
                     <div>
                         <div class="stat-value">R$ 23.150</div>
                         <div class="stat-label">Lucro do Mês</div>
-                        <div class="stat-change change-up">
-                            <i class="bi bi-arrow-up"></i> 8.6% este mês
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -143,14 +137,12 @@ if (!isset($_SESSION['usuario_logado'])) {
             <div class="col-6 col-md-3">
                 <div class="stat-card d-flex align-items-center p-3">
                     <div class="icon-container icon-satisfaction me-3">
-                        <i class="bi bi-arrow-counterclockwise"></i>
+                        <i class="bi-cash-stack"></i>
                     </div>
                     <div>
                         <div class="stat-value">R$ 1.245</div>
-                        <div class="stat-label">Reembolsos</div>
-                        <div class="stat-change change-down">
-                            <i class="bi bi-arrow-down"></i> 1.3% este mês
-                        </div>
+                        <div class="stat-label">Lucro da Semana</div>
+                        
                     </div>
                 </div>
             </div>
@@ -160,7 +152,7 @@ if (!isset($_SESSION['usuario_logado'])) {
         <div class="data-table">
             <div class="table-header">
                 <h3 class="table-title">Pedidos Recentes</h3>
-                <a href="#" class="btn btn-sm btn-outline-primary">Ver todos</a>
+                <a href="vendas.php" class="btn btn-sm btn-outline-primary">Ver todos</a>
             </div>
 
             <div class="table-responsive">

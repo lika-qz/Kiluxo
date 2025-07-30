@@ -47,12 +47,17 @@ if (!isset($_SESSION['usuario_logado'])) {
     <!-- Sidebar -->
     <div class="sidebar">
         <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
-            <li class="nav-item"><a class="nav-link active" href="vendas.php"><i class="bi bi-cart4"></i><span>Vendas</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="produtos.php"><i class="bi bi-box-seam"></i><span>Produtos</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="usuarios.php"><i class="bi bi-people"></i><span>Usuários</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="dashboard.php"><i
+                        class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a class="nav-link active" href="vendas.php"><i
+                        class="bi bi-cart4"></i><span>Vendas</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.php"><i
+                        class="bi bi-box-seam"></i><span>Produtos</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="usuarios.php"><i
+                        class="bi bi-people"></i><span>Usuários</span></a></li>
             <div class="divider"></div>
-            <li class="nav-item"><a class="nav-link" href="../vendor/php/logout.php"><i class="bi bi-box-arrow-right"></i><span>Sair</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="../vendor/php/logout.php"><i
+                        class="bi bi-box-arrow-right"></i><span>Sair</span></a></li>
         </ul>
     </div>
 
@@ -61,7 +66,7 @@ if (!isset($_SESSION['usuario_logado'])) {
         <div class="data-table">
             <div class="table-header d-flex justify-content-between align-items-center">
                 <h3 class="table-title">Histórico de Vendas</h3>
-                <a href="#" class="btn btn-sm btn-outline-success"><i class="bi bi-plus-circle"></i> Nova Venda</a>
+
             </div>
 
             <div class="table-responsive">
@@ -86,42 +91,68 @@ if (!isset($_SESSION['usuario_logado'])) {
                             <td>R$ 3.200,00</td>
                             <td><span class="badge bg-success">Pago</span></td>
                             <td>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></button>
-                                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary editar-status-btn"
+                                    data-bs-toggle="modal" data-bs-target="#modalStatusVenda" data-venda-id="VND-2025"
+                                    data-status-atual="Pago">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>#VND-2024</td>
-                            <td>Fernanda Lima</td>
-                            <td>29/07/2025</td>
-                            <td>Smartphone</td>
-                            <td>R$ 2.100,00</td>
-                            <td><span class="badge bg-warning text-dark">Pendente</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></button>
-                                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#VND-2023</td>
-                            <td>Rafael Torres</td>
-                            <td>28/07/2025</td>
-                            <td>Monitor, Mouse</td>
-                            <td>R$ 1.450,00</td>
-                            <td><span class="badge bg-danger">Cancelado</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></button>
-                                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
-                            </td>
+
                         </tr>
                         <!-- Adicione mais linhas conforme necessário -->
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalStatusVenda" tabindex="-1" aria-labelledby="modalStatusVendaLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="formAtualizarStatus" method="post" action="../vendor/php/atualizarStatusVenda.php">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalStatusVendaLabel">Alterar Status da Venda</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="venda_id" id="inputVendaId">
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Novo Status</label>
+                            <select name="status" id="selectNovoStatus" class="form-select" required>
+                                <option value="Pago">Pago</option>
+                                <option value="Pendente">Pendente</option>
+                                <option value="Cancelado">Cancelado</option>
+                                <option value="Embalando">Embalando</option>
+                                <option value="Enviado">Enviado</option>
+                                <option value="Entregue">Entregue</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script>
+    document.querySelectorAll('.editar-status-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const vendaId = button.getAttribute('data-venda-id');
+            const statusAtual = button.getAttribute('data-status-atual');
+
+            document.getElementById('inputVendaId').value = vendaId;
+            document.getElementById('selectNovoStatus').value = statusAtual;
+        });
+    });
+</script>
+
 </html>

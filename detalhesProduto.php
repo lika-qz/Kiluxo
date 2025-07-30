@@ -1,59 +1,26 @@
 <?php
 session_start();
-require_once 'listaProdutos.php';
+require_once "vendor/php/conexao.php"; // Garante que $pdo seja definido
 
-// Garantir carrinho na sessão
-if (!isset($_SESSION['carrinho'])) {
-	$_SESSION['carrinho'] = [];
-}
+// Inicializar carrinho, se ainda não existir
 
-// Calcular total
-$total = 0;
-foreach ($_SESSION['carrinho'] as $item) {
-	$total += ($item['preco'] ?? 0) * ($item['quantidade'] ?? 1);
-}
-
-// Pegar o ID do produto via GET
-if (isset($_GET['id'])) {
-	$id = $_GET['id'];
-
-	// Buscar produto com base no ID
-	$produtoSelecionado = null;
-	foreach ($produtos as $produto) {
-		if ($produto['id'] == $id) {
-			$produtoSelecionado = $produto;
-			break;
-		}
-	}
-
-	if (!$produtoSelecionado) {
-		die("<h2>Produto não encontrado.</h2>");
-	}
-} else {
-	die("<h2>ID do produto não foi fornecido.</h2>");
-}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 	$id = (int) $_POST['id'];
 	$nome = $_POST['nome'] ?? '';
-	$preco = (float) $_POST['preco'] ?? 0;
+	$preco = (float) ($_POST['preco'] ?? 0);
 	$imagem = $_POST['imagem'] ?? '';
 	$descricao = $_POST['descricao'] ?? '';
 	$quantidade = (int) ($_POST['quantidade'] ?? 1);
 	$tamanho = $_POST['tamanho'] ?? '';
 	$cor = $_POST['cor'] ?? '';
 
-	// Validação básica
-	if ($id && $nome && $preco && $imagem && $descricao) {
-		if (!isset($_SESSION['carrinho'])) {
-			$_SESSION['carrinho'] = [];
-		}
+	if ($id && $nome && $preco && $imagem && $descricao && $tamanho && $cor) {
+		$chave = $id . '_' . $cor . '_' . $tamanho; // identificador único
 
-		// Usar o ID como chave ou adicionar como item novo
-		if (isset($_SESSION['carrinho'][$id])) {
-			// Atualiza quantidade se já existir
-			$_SESSION['carrinho'][$id]['quantidade'] += $quantidade;
+		if (isset($_SESSION['carrinho'][$chave])) {
+			$_SESSION['carrinho'][$chave]['quantidade'] += $quantidade;
 		} else {
-			$_SESSION['carrinho'][$id] = [
+			$_SESSION['carrinho'][$chave] = [
 				'id' => $id,
 				'nome' => $nome,
 				'preco' => $preco,
@@ -65,16 +32,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 			];
 		}
 
-		// Redireciona para o carrinho após adicionar
-		header('Location: product.php');
+		// Redireciona ou mostra mensagem
+		header("Location: product.php"); // ou detalhesProduto.php?id=$id
 		exit;
-
 	} else {
-		error_log("Dados inválidos recebidos: " . print_r($_POST, true));
+		error_log("Erro: dados incompletos para o carrinho. POST: " . print_r($_POST, true));
+	}
+}
+// Buscar produto com base no ID GET
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+	die("<h2>ID do produto não foi fornecido ou é inválido.</h2>");
+}
+
+$id = (int) $_GET['id'];
+
+// Consulta ao banco de dados
+$stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = ?");
+$stmt->execute([$id]);
+$produtoSelecionado = $stmt->fetch();
+
+if (!$produtoSelecionado) {
+	die("<h2>Produto não encontrado.</h2>");
+}
+
+// Se foi feita uma requisição POST para adicionar ao carrinho
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+	$id = (int) $_POST['id'];
+	$nome = trim($_POST['nome'] ?? '');
+	$preco = (float) ($_POST['preco'] ?? 0);
+	$imagem = trim($_POST['imagem'] ?? '');
+	$descricao = trim($_POST['descricao'] ?? '');
+	$quantidade = (int) ($_POST['quantidade'] ?? 1);
+	$tamanho = trim($_POST['tamanho'] ?? '');
+	$cores = explode(',', $produtoSelecionado['cores'] ?? '');
+	foreach ($cores as $cor):
+		$cor = trim($cor);
+		$corCss = $mapaCores[strtolower($cor)] ?? '#ccc';
+		// ...
+	endforeach;
+
+	// Validação mínima dos dados
+	if ($id && $nome && $preco && $imagem && $descricao) {
+		// Verifica se o produto já está no carrinho
+		if (isset($_SESSION['carrinho'][$id])) {
+			$_SESSION['carrinho'][$id]['quantidade'] += $quantidade;
+		} else {
+			$_SESSION['carrinho'][$id] = [
+				'id' => $id,
+				'nome' => $nome,
+				'preco' => $preco,
+				'imagem' => $imagem,
+				'descricao' => $descricao,
+				'quantidade' => $quantidade,
+				'tamanho' => $tamanho,
+				'cores' => $cores
+			];
+		}
+
+		header('Location: product.php'); // Redirecionar após adicionar
+		exit;
+	} else {
+		error_log("Dados inválidos no POST: " . print_r($_POST, true));
 	}
 }
 
+// Mapeamento de cores (para exibição)
+$mapaCores = [
+	'azul' => '#0000FF',
+	'vermelho' => '#FF0000',
+	'verde' => '#008000',
+	'amarelo' => '#FFFF00',
+	'preto' => '#000000',
+	'branco' => '#FFFFFF'
+];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -148,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 							</li>
 
 							<li class="label1" <?php
-						
+
 
 							$totalItensCarrinho = 0;
 
@@ -185,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 							</div>
 						</div>
 
-						
+
 						<div class="flex-c-m h-full p-lr-19">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
 								<i class="zmdi zmdi-menu"></i>
@@ -468,68 +500,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 			<div class="row no-gutters">
 				<!-- Imagem -->
 				<div class="col-md-6">
-					<img src="images/<?= $produtoSelecionado['imagem'] ?>" class="img-fluid rounded-left"
+					<img src="./vendor/uploads/<?= $produtoSelecionado['imagem'] ?>" class="img-fluid rounded-left"
 						alt="<?= $produtoSelecionado['nome'] ?>">
 				</div>
 
 				<!-- Detalhes -->
+				<!-- Detalhes do Produto -->
 				<div class="col-md-6 p-4">
-					<h2 class="mtext-105 mb-3"><?= $produtoSelecionado['nome'] ?></h2>
-					<p class="text-muted"><?= $produtoSelecionado['descricao'] ?></p>
-					<h4 class="text-primary mt-3">R$ <?= number_format($produtoSelecionado['preco'], 2, ',', '.') ?>
+					<!-- Nome -->
+					<h2 class="mtext-105 mb-3"><?= htmlspecialchars($produtoSelecionado['nome']) ?></h2>
+
+					<!-- Descrição -->
+					<p class="text-muted"><?= htmlspecialchars($produtoSelecionado['descricao'] ?? '') ?></p>
+
+
+					<!-- Preço -->
+					<h4 class="text-primary mt-3">
+						R$ <?= number_format($produtoSelecionado['preco'], 2, ',', '.') ?>
 					</h4>
 
-					<?php
-					$mapaCores = [
-						'azul' => '#007bff',
-						'vermelho' => '#dc3545',
-						'verde' => '#28a745',
-						'preto' => '#000000',
-						'branco' => '#ffffff',
-						'amarelo' => '#ffc107',
-						'rosa' => '#e83e8c',
-					];
-					?>
-
-					<form action="" method="post" class="mt-4">
+					<!-- Formulário de Adição ao Carrinho -->
+					<form method="POST" action="detalhesProduto.php?id=<?= $produtoSelecionado['id'] ?>" class="mt-4">
+						<!-- Campos Ocultos para envio -->
 						<input type="hidden" name="id" value="<?= $produtoSelecionado['id'] ?>">
-						<input type="hidden" name="nome" value="<?= $produtoSelecionado['nome'] ?>">
+						<input type="hidden" name="nome" value="<?= htmlspecialchars($produtoSelecionado['nome']) ?>">
 						<input type="hidden" name="preco" value="<?= $produtoSelecionado['preco'] ?>">
-						<input type="hidden" name="imagem" value="<?= $produtoSelecionado['imagem'] ?>">
-						<input type="hidden" name="descricao" value="<?= $produtoSelecionado['descricao'] ?>">
+						<input type="hidden" name="imagem"
+							value="<?= htmlspecialchars($produtoSelecionado['imagem']) ?>">
+						<input type="hidden" name="descricao"
+							value="<?= htmlspecialchars($produtoSelecionado['descricao']) ?>">
 
-						<!-- Tamanhos -->
+						<!-- Tamanho (se houver) -->
 						<?php if (!empty($produtoSelecionado['tamanhos'])): ?>
 							<div class="form-group mt-4">
 								<label><strong>Tamanho:</strong></label>
 								<div class="btn-group btn-group-toggle d-flex flex-wrap gap-2 mt-2" data-toggle="buttons">
-									<?php foreach ($produtoSelecionado['tamanhos'] as $tamanho): ?>
-										<label class="btn btn-outline-secondary rounded-circle text-uppercase px-3 py-2">
-											<input type="radio" name="tamanho" value="<?= $tamanho ?>" required> <?= $tamanho ?>
+									<?php
+									$tamanhos = explode(',', $produtoSelecionado['tamanhos']);
+									foreach ($tamanhos as $tamanho):
+										$tamanho = trim($tamanho);
+										?>
+										<label class="btn btn-outline-secondary rounded text-uppercase px-3 py-2">
+											<input type="radio" name="tamanho" value="<?= htmlspecialchars($tamanho) ?>"
+												required> <?= htmlspecialchars($tamanho) ?>
 										</label>
 									<?php endforeach; ?>
 								</div>
 							</div>
 						<?php endif; ?>
 
-						<!-- Cores -->
-						<?php if (!empty($produtoSelecionado['cores'])): ?>
-							<div class="form-group mt-3">
-								<label><strong>Cor:</strong></label>
-								<div class="d-flex flex-wrap gap-3 mt-2">
-									<?php foreach ($produtoSelecionado['cores'] as $cor): ?>
-										<?php
-										$corCss = isset($mapaCores[strtolower($cor)]) ? $mapaCores[strtolower($cor)] : '#ccc';
-										?>
-										<label class="d-inline-block position-relative">
-											<input type="radio" name="cor" value="<?= $cor ?>" class="d-none" required>
-											<span class="rounded-circle border"
-												style="width: 35px; height: 35px; background-color: <?= $corCss ?>; display: inline-block; cursor: pointer;"></span>
-										</label>
-									<?php endforeach; ?>
-								</div>
-							</div>
-						<?php endif; ?>
+
+						<!-- Cor (se houver) -->
+						<?php
+						$cores = explode(',', $produtoSelecionado['cores'] ?? '');
+						?>
+
+						<label><strong>Cores disponíveis:</strong></label>
+						<div class="d-flex flex-wrap gap-3 mt-2">
+							<?php foreach ($cores as $cor): ?>
+								<?php
+								$cor = strtolower(trim($cor));
+								$corCss = $mapaCores[$cor] ?? '#ccc';
+								?>
+								<label class="d-inline-block position-relative">
+									<input type="radio" name="cor" value="<?= htmlspecialchars($cor) ?>" class="d-none"
+										required>
+									<span class="rounded-circle border border-dark"
+										style="width: 35px; height: 35px; background-color: <?= $corCss ?>; display: inline-block; cursor: pointer;"></span>
+								</label>
+							<?php endforeach; ?>
+						</div>
+
 
 						<!-- Quantidade -->
 						<div class="form-group mt-4">
@@ -548,14 +589,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 							</div>
 						</div>
 
-
+						<!-- Botão Adicionar ao Carrinho -->
 						<button type="submit" class="btn btn-success btn-lg mt-3">
 							<i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho
 						</button>
-
-
 					</form>
 				</div>
+
 			</div>
 		</div>
 	</div>

@@ -251,7 +251,7 @@ foreach ($_SESSION['carrinho'] as $item) {
     <!-- Checkout -->
     <section class="bg0 p-t-75 p-b-85">
         <div class="container">
-            <form action="processar-pedido.php" method="post">
+            <form action="vendor/php/processarPedido.php" method="post">
                 <div class="row">
                     <!-- Formulário -->
                     <div class="col-lg-6 col-md-12 m-b-50">

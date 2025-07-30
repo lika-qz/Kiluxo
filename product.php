@@ -1,45 +1,18 @@
 <?php
 session_start();
-require_once __DIR__ . '/listaProdutos.php';
+require_once "vendor/php/conexao.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-	$id = (int) $_POST['id'];
+// Buscar produtos do banco
+$stmt = $pdo->query("SELECT * FROM produtos ORDER BY id DESC");
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-	// Certifique-se de que os dados obrigatórios estão presentes
-	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-		$id = (int) $_POST['id'];
-
-		// Adiciona validação mais rígida
-		if (
-			!empty($_POST['nome']) &&
-			!empty($_POST['preco']) &&
-			!empty($_POST['imagem']) &&
-			!empty($_POST['descricao'])
-		) {
-			if (!isset($_SESSION['carrinho'])) {
-				$_SESSION['carrinho'] = [];
-			}
-
-			if (isset($_SESSION['carrinho'][$id])) {
-				$_SESSION['carrinho'][$id]['quantidade'] += 1;
-			} else {
-				$_SESSION['carrinho'][$id] = [
-					'nome' => $_POST['nome'],
-					'preco' => (float) $_POST['preco'],
-					'imagem' => $_POST['imagem'],
-					'descricao' => $_POST['descricao'],
-					'quantidade' => 1
-				];
-			}
-
-		} else {
-			// Log de depuração opcional
-			error_log("Tentativa de adicionar item incompleto ao carrinho: " . print_r($_POST, true));
-		}
-	}
+// Função para "sanitizar" classes CSS com base na categoria
+function slugify($text)
+{
+	return strtolower(preg_replace('/[^a-z0-9]/', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $text)));
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -93,20 +66,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 								<a href="product.php">Shop</a>
 							</li>
 
-							<li class="label1" <?php
-
+							<?php
 							$totalItensCarrinho = 0;
 
-							if (isset($_SESSION['carrinho'])) {
+							if (!empty($_SESSION['carrinho'])) {
 								foreach ($_SESSION['carrinho'] as $item) {
 									$totalItensCarrinho += $item['quantidade'];
 								}
 							}
+							?>
 
-							echo 'data-label1="' . ($totalItensCarrinho > 0 ? $totalItensCarrinho : '') . '"';
-							?>>
+							<li class="label1" <?= $totalItensCarrinho > 0 ? 'data-label1="' . $totalItensCarrinho . '"' : '' ?>>
 								<a href="shoping-cart.php">Carrinho</a>
 							</li>
+
 
 							<li>
 								<a href="blog.php">Blog</a>
@@ -178,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 					<a href="product.php">Shop</a>
 				</li>
 
-				<li >
+				<li>
 					<a href="shoping-cart.php">
 						Carrinho
 						<?php
@@ -200,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 					</a>
 				</li>
 				<li>
-				<a href="blog.php">Blog</a>
+					<a href="blog.php">Blog</a>
 				</li>
 
 				<li>
@@ -366,9 +339,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 					<?php
 					$categorias = array_unique(array_column($produtos, 'categoria'));
 					foreach ($categorias as $categoria):
+						$slug = slugify($categoria);
 						?>
 						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 category-btn"
-							data-filter=".<?= $categoria ?>">
+							data-filter=".<?= $slug ?>">
 							<?= ucfirst($categoria) ?>
 						</button>
 					<?php endforeach; ?>
@@ -376,18 +350,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 			</div>
 
 			<!-- LISTA DE PRODUTOS -->
-
 			<div class="row isotope-grid">
 				<?php foreach ($produtos as $produto): ?>
-					<div
-						class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item <?= htmlspecialchars($produto['categoria']) ?>">
+					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item <?= slugify($produto['categoria']) ?>">
 						<div class="card mb-4 h-100 d-flex flex-column">
-							<img src="images/<?= htmlspecialchars($produto['imagem']) ?>" class="card-img-top"
+							<img src="./vendor/uploads/<?= htmlspecialchars($produto['imagem']) ?>" class="card-img-top"
 								alt="<?= htmlspecialchars($produto['nome']) ?>">
 
 							<div class="card-body d-flex flex-column">
 								<h5 class="card-title"><?= htmlspecialchars($produto['nome']) ?></h5>
-								<p class="product-price mb-3">R$<?= number_format($produto['preco'], 2, ',', '.') ?></p>
+								<p class="product-price mb-3">
+									R$<?= number_format($produto['preco'], 2, ',', '.') ?>
+								</p>
 
 								<div class="mt-auto">
 									<div class="d-flex flex-column gap-2">
@@ -395,6 +369,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 											class="btn btn-sm btn-outline-secondary w-100 mb-2">
 											Detalhes
 										</a>
+
 										<!-- Formulário Adicionar -->
 										<form action="" method="post" class="w-100">
 											<input type="hidden" name="id" value="<?= $produto['id'] ?>">
@@ -402,17 +377,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 												value="<?= htmlspecialchars($produto['nome']) ?>">
 											<input type="hidden" name="preco" value="<?= $produto['preco'] ?>">
 											<input type="hidden" name="imagem"
-												value="<?= htmlspecialchars($produto['imagem']) ?>"> <!-- CORRETO -->
-
+												value="<?= htmlspecialchars($produto['imagem']) ?>">
 											<input type="hidden" name="descricao"
 												value="<?= htmlspecialchars($produto['descricao']) ?>">
 											<input type="hidden" name="quantidade" value="1">
 
-											<button type="submit" class="btn btn-sm btn-primary w-100">
-												<i class="zmdi zmdi-shopping-cart me-1"></i> Adicionar
-											</button>
+											<a href="./detalhesProduto.php?id=<?= $produto['id'] ?>"
+												class="btn btn-sm btn-primary w-100 mb-2">
+												Adicionar ao carrinho
+											</a>
 										</form>
-
 									</div>
 								</div>
 							</div>
@@ -421,7 +395,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 				<?php endforeach; ?>
 			</div>
 
-			<!-- Load more -->
+			<!-- Botão "Carregar mais" -->
 			<div class="flex-c-m flex-w w-full p-t-45">
 				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
 					Carregar mais

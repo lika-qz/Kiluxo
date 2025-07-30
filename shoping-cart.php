@@ -1,20 +1,6 @@
 <?php
 session_start();
-require_once 'listaProdutos.php';
 
-// Função para limpar o carrinho
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['limpar_carrinho'])) {
-	unset($_SESSION['carrinho']);
-	header('Location: shoping-cart.php'); // Redireciona para evitar reenvio de formulário
-	exit;
-}
-
-// Inicializa o carrinho se não existir
-if (!isset($_SESSION['carrinho'])) {
-	$_SESSION['carrinho'] = [];
-}
-
-// Se for um POST com um produto sendo adicionado
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 	$id = (int) $_POST['id'];
 	$nome = $_POST['nome'] ?? '';
@@ -25,44 +11,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 	$tamanho = $_POST['tamanho'] ?? '';
 	$cor = $_POST['cor'] ?? '';
 
-	// Validação básica
-	if ($id && $nome && $preco && $imagem && $descricao) {
-		if (!isset($_SESSION['carrinho'])) {
-			$_SESSION['carrinho'] = [];
-		}
+	$chave = $id . '-' . $tamanho . '-' . $cor;
 
-		// Cria uma chave única considerando tamanho e cor
-		$chave = $id . '-' . $tamanho . '-' . $cor;
-
-		if (isset($_SESSION['carrinho'][$chave])) {
-			$_SESSION['carrinho'][$chave]['quantidade'] += $quantidade;
-		} else {
-			$_SESSION['carrinho'][$chave] = [
-				'id' => $id,
-				'nome' => $nome,
-				'preco' => $preco,
-				'imagem' => $imagem,
-				'descricao' => $descricao,
-				'quantidade' => $quantidade,
-				'tamanho' => $tamanho,
-				'cor' => $cor
-			];
-		}
-
-		header('Location: carrinho.php');
-		exit;
-	} else {
-		error_log("Dados inválidos recebidos: " . print_r($_POST, true));
+	if (!isset($_SESSION['carrinho'])) {
+		$_SESSION['carrinho'] = [];
 	}
-}
 
+	if (isset($_SESSION['carrinho'][$chave])) {
+		$_SESSION['carrinho'][$chave]['quantidade'] += $quantidade;
+	} else {
+		$_SESSION['carrinho'][$chave] = [
+			'id' => $id,
+			'nome' => $nome,
+			'preco' => $preco,
+			'imagem' => $imagem,
+			'descricao' => $descricao,
+			'quantidade' => $quantidade,
+			'tamanho' => $tamanho,
+			'cor' => $cor
+		];
+	}
 
-// Calcula o total do carrinho
-$total = 0;
-foreach ($_SESSION['carrinho'] as $item) {
-	$total += $item['preco'] * $item['quantidade'];
+	header('Location: shoping-cart.php');
+	exit;
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -302,73 +276,71 @@ foreach ($_SESSION['carrinho'] as $item) {
 	<form class="bg0 p-t-75 p-b-85" method="post" action="atualizar-carrinho.php">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-					<div class="m-l-25 m-r--38 m-lr-0-xl">
-						<div class="wrap-table-shopping-cart">
-							<table class="table-shopping-cart">
-								<!-- Cabeçalho da tabela -->
-								<tr class="table_head">
-									<th class="column-1">Produto</th>
-									<th class="column-2">Nome</th>
-									<th class="column-3">Preço</th>
-									<th class="column-4">Quantidade</th>
-									<th class="column-5">Total</th>
-								</tr>
 
-								<?php
-								$total = 0;
+				<!-- Tabela de produtos no carrinho -->
+				<div class="col-lg-8 col-xl-8 m-lr-auto m-b-50">
+					<div class="wrap-table-shopping-cart">
+						<table class="table-shopping-cart">
+							<!-- Cabeçalho da tabela -->
+							<tr class="table_head">
+								<th class="column-1">Produto</th>
+								<th class="column-2">Nome</th>
+								<th class="column-3">Preço</th>
+								<th class="column-4">Quantidade</th>
+								<th class="column-5">Total</th>
+							</tr>
 
-								if (!empty($_SESSION['carrinho'])):
-									foreach ($_SESSION['carrinho'] as $id => $produto):
-										$nome = htmlspecialchars($produto['nome']);
-										$preco = (float) $produto['preco'];
-										$quant = (int) $produto['quantidade'];
-										$imagem = htmlspecialchars($produto['imagem']);
-										$subtotal = $preco * $quant;
-										$total += $subtotal;
-										?>
-										<!-- Linha do produto -->
-										<tr class="table_row">
-											<td class="column-1">
-												<div class="how-itemcart1">
-													<img src="images/<?= $imagem ?>" alt="<?= $nome ?>"
-														style="width: 80px; height: auto;">
-												</div>
-											</td>
-											<td class="column-2"><?= $nome ?></td>
-											<td class="column-3">R$ <?= number_format($preco, 2, ',', '.') ?></td>
-											<td class="column-4">
-												<input type="number" name="quantidade[<?= $id ?>]" value="<?= $quant ?>" min="1"
-													class="form-control text-center" style="max-width: 70px;">
-											</td>
-											<td class="column-5">R$ <?= number_format($subtotal, 2, ',', '.') ?></td>
-										</tr>
+							<?php
+							$total = 0;
 
-										<?php
-									endforeach;
-								else:
+							if (!empty($_SESSION['carrinho'])):
+								foreach ($_SESSION['carrinho'] as $id => $produto):
+									$nome = htmlspecialchars($produto['nome']);
+									$preco = (float) $produto['preco'];
+									$quant = (int) $produto['quantidade'];
+									$imagem = htmlspecialchars($produto['imagem']);
+									$subtotal = $preco * $quant;
+									$total += $subtotal;
 									?>
-									<!-- Carrinho vazio -->
-									<tr>
-										<td colspan="5" class="text-center">Seu carrinho está vazio.</td>
+									<!-- Linha do produto -->
+									<tr class="table_row">
+										<td class="column-1">
+											<div class="how-itemcart1">
+												<img src="./vendor/uploads/<?= $imagem ?>" alt="<?= $nome ?>"
+													style="width: 80px; height: auto;">
+											</div>
+										</td>
+										<td class="column-2"><?= $nome ?></td>
+										<td class="column-3">R$ <?= number_format($preco, 2, ',', '.') ?></td>
+										<td class="column-4">
+											<input type="number" name="quantidade[<?= $id ?>]" value="<?= $quant ?>" min="1"
+												class="form-control text-center" style="max-width: 70px;">
+										</td>
+										<td class="column-5">R$ <?= number_format($subtotal, 2, ',', '.') ?></td>
 									</tr>
+									<?php
+								endforeach;
+							else:
+								?>
+								<!-- Carrinho vazio -->
+								<tr>
+									<td colspan="5" class="text-center">Seu carrinho está vazio.</td>
+								</tr>
+							<?php endif; ?>
+						</table>
+					</div>
 
-								<?php endif; ?>
-							</table>
-
-						</div>
-
-						<div
-							class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-							<a href="shoping-cart.php">Atualizar carrinho</a>
-						</div>
-
-
+					<!-- Botão de atualizar -->
+					<div class=" mt-3">
+						<a href="shoping-cart.php" class="btn btn-outline-dark btn-sm px-4 py-2 w-100">
+							Atualizar carrinho
+						</a>
 					</div>
 				</div>
 
-				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-					<div class="bor10 p-lr-40 p-t-30 p-b-40">
+				<!-- Total do carrinho -->
+				<div class="col-lg-4 col-xl-4 m-lr-auto m-b-50">
+					<div class="bor10 p-lr-40 p-t-30 p-b-40 shadow">
 						<h4 class="mtext-109 cl2 p-b-30">Total do Carrinho</h4>
 
 						<div class="flex-w flex-t p-t-27 p-b-33">
@@ -387,6 +359,7 @@ foreach ($_SESSION['carrinho'] as $item) {
 						</a>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</form>

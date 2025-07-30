@@ -112,7 +112,7 @@ try {
                                             class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a href="../vendor/php/excluir_produto.php?id=<?= $produto['id'] ?>"
+                                        <a href="../vendor/php/excluirProduto.php?id=<?= $produto['id'] ?>"
                                             class="btn btn-sm btn-outline-danger"
                                             onclick="return confirm('Tem certeza que deseja excluir este produto?')">
                                             <i class="bi bi-trash"></i>
