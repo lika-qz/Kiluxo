@@ -64,8 +64,6 @@ try {
                         class="bi bi-box-seam"></i><span>Produtos</span></a></li>
             <li class="nav-item"><a class="nav-link" href="usuarios.php"><i
                         class="bi bi-people"></i><span>Usuários</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear"></i><span>Configurações</span></a>
-            </li>
             <div class="divider"></div>
             <li class="nav-item"><a class="nav-link" href="../vendor/php/logout.php"><i
                         class="bi bi-box-arrow-right"></i><span>Sair</span></a></li>
