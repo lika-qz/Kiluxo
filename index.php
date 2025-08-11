@@ -91,7 +91,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								<i class="zmdi zmdi-search"></i>
 							</div>
 						</div>
-
+						
 						<div class="flex-c-m h-full p-lr-19">
 							<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
 								<i class="zmdi zmdi-menu"></i>
@@ -482,10 +482,15 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				</div>
 			</div>
 		</div>
-	</section>
+	</section><br><br>
 
 
 	<!-- Banner -->
+	 <div class="p-b-32">
+		<h3 class="ltext-105 cl5 txt-center respon1">
+			Categorias
+		</h3>
+	</div>
 	<div class="sec-banner bg0">
 		<div class="flex-w flex-c-m">
 			<div class="size-202 m-lr-auto respon4">
@@ -662,7 +667,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<div class="container">
 			<div class="p-b-66">
 				<h3 class="ltext-105 cl5 txt-center respon1">
-					Nossos Blogs
+					Nosso Blog
 				</h3>
 			</div>
 
@@ -670,7 +675,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				<div class="col-sm-6 col-md-4 p-b-40">
 					<div class="blog-item">
 						<div class="hov-img0">
-							<a href="blog-detail.php">
+							<a href="#">
 								<img src="images/blog-01.jpg" alt="IMG-BLOG">
 							</a>
 						</div>
@@ -699,7 +704,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							</div>
 
 							<h4 class="p-b-12">
-								<a href="blog-detail.php" class="mtext-101 cl2 hov-cl1 trans-04">
+								<a href="#" class="mtext-101 cl2 hov-cl1 trans-04">
 									8 Maneiras inspiradoras de usar vestidos no inverno.
 								</a>
 							</h4>
@@ -716,7 +721,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				<div class="col-sm-6 col-md-4 p-b-40">
 					<div class="blog-item">
 						<div class="hov-img0">
-							<a href="blog-detail.php">
+							<a href="#">
 								<img src="images/blog-02.jpg" alt="IMG-BLOG">
 							</a>
 						</div>
@@ -745,7 +750,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							</div>
 
 							<h4 class="p-b-12">
-								<a href="blog-detail.php" class="mtext-101 cl2 hov-cl1 trans-04">
+								<a href="#" class="mtext-101 cl2 hov-cl1 trans-04">
 									A grande lista de presentes masculinos para o feriado.
 								</a>
 							</h4>
@@ -761,7 +766,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				<div class="col-sm-6 col-md-4 p-b-40">
 					<div class="blog-item">
 						<div class="hov-img0">
-							<a href="blog-detail.php">
+							<a href="#">
 								<img src="images/blog-03.jpg" alt="IMG-BLOG">
 							</a>
 						</div>
@@ -789,7 +794,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							</div>
 
 							<h4 class="p-b-12">
-								<a href="blog-detail.php" class="mtext-101 cl2 hov-cl1 trans-04">
+								<a href="#" class="mtext-101 cl2 hov-cl1 trans-04">
 									5 tendências de moda do inverno à primavera para você experimentar.
 								</a>
 							</h4>

@@ -181,7 +181,7 @@
 						<i class="zmdi zmdi-search"></i>
 					</button>
 					<label for="search-input" class="sr-only">Pesquisar</label>
-					<input id="search-input" class="plh3" type="text" name="search" placeholder="Search..."
+					<input id="search-input" class="plh3" type="text" name="search" placeholder="Pesquisar..."
 						autocomplete="off">
 				</form>
 			</div>
@@ -325,7 +325,7 @@
 					<div class="p-r-45 p-r-0-lg">
 						<!-- item blog -->
 						<div class="p-b-63">
-							<a href="blog-detail.php" class="hov-img0 how-pos5-parent">
+							<a href="#" class="hov-img0 how-pos5-parent">
 								<img src="images/blog-04.jpg" alt="IMG-BLOG">
 
 								<div class="flex-col-c-m size-123 bg9 how-pos5">
@@ -341,7 +341,7 @@
 
 							<div class="p-t-32">
 								<h4 class="p-b-15">
-									<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
+									<a href="#" class="ltext-108 cl2 hov-cl1 trans-04">
 										8 Maneiras inspiradoras de usar vestidos no inverno.
 									</a>
 								</h4>
@@ -369,7 +369,7 @@
 										</span>
 									</span>
 
-									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+									<a href="#" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
 										Continuar lendo
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
@@ -380,7 +380,7 @@
 
 						<!-- item blog -->
 						<div class="p-b-63">
-							<a href="blog-detail.php" class="hov-img0 how-pos5-parent">
+							<a href="#" class="hov-img0 how-pos5-parent">
 								<img src="images/blog-05.jpg" alt="IMG-BLOG">
 
 								<div class="flex-col-c-m size-123 bg9 how-pos5">
@@ -396,7 +396,7 @@
 
 							<div class="p-t-32">
 								<h4 class="p-b-15">
-									<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
+									<a href="#" class="ltext-108 cl2 hov-cl1 trans-04">
 										A grande lista de presentes masculinos para o feriado.
 									</a>
 								</h4>
@@ -424,7 +424,7 @@
 										</span>
 									</span>
 
-									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+									<a href="#" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
 										Continuar lendo
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
@@ -435,7 +435,7 @@
 
 						<!-- item blog -->
 						<div class="p-b-63">
-							<a href="blog-detail.php" class="hov-img0 how-pos5-parent">
+							<a href="#" class="hov-img0 how-pos5-parent">
 								<img src="images/blog-06.jpg" alt="IMG-BLOG">
 
 								<div class="flex-col-c-m size-123 bg9 how-pos5">
@@ -451,7 +451,7 @@
 
 							<div class="p-t-32">
 								<h4 class="p-b-15">
-									<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
+									<a href="#" class="ltext-108 cl2 hov-cl1 trans-04">
 										5 tendências de moda do inverno à primavera para você experimentar.
 									</a>
 								</h4>
@@ -479,7 +479,7 @@
 										</span>
 									</span>
 
-									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+									<a href="#" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
 										Continuar lendo
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
@@ -493,9 +493,7 @@
 				<div class="col-md-4 col-lg-3 p-b-80">
 					<div class="side-menu">
 						<div class="search-container">
-							<input class="search-input" type="text" name="search" placeholder="Search"
-								aria-label="Search field">
-
+							<input class="search-input" type="text" name="search" placeholder="Pesquisar..." aria-label="Search field">
 							<button class="search-button" type="submit" aria-label="Search">
 								<i class="search-icon zmdi zmdi-search"></i>
 							</button>
@@ -551,28 +549,28 @@
 									</a>
 
 									<div class="size-215 flex-col-t p-t-8">
-										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											White Shirt With Pleat Detail Back
+										<a href="product.php" class="stext-116 cl8 hov-cl1 trans-04">
+											Blazer Masculino
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$19.00
+											$1.999,00
 										</span>
 									</div>
 								</li>
 
 								<li class="flex-w flex-t p-b-30">
-									<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+									<a href="product.php" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
 										<img src="images/product-min-02.jpg" alt="PRODUCT">
 									</a>
 
 									<div class="size-215 flex-col-t p-t-8">
-										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											Converse All Star Hi Black Canvas
+										<a href="product.php" class="stext-116 cl8 hov-cl1 trans-04">
+											Casaco Masculino
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$39.00
+											$139,00
 										</span>
 									</div>
 								</li>
@@ -584,11 +582,11 @@
 
 									<div class="size-215 flex-col-t p-t-8">
 										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											Nixon Porter Leather Watch In Tan
+											Casaco Iverno
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$17.00
+											$187,00
 										</span>
 									</div>
 								</li>

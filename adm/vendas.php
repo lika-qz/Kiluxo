@@ -5,116 +5,120 @@ if (!isset($_SESSION['usuario_logado'])) {
     exit;
 }
 
-require_once '../vendor/php/conexao.php';
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-$stmt = $pdo->query("SELECT * FROM pedidos ORDER BY criado_em DESC");
-$pedidos = $stmt->fetchAll();
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vendas | Kiluxo</title>
 
-foreach ($pedidos as $pedido):
-    // Buscar produtos desse pedido
-    $stmtItens = $pdo->prepare("
-        SELECT ip.*, p.nome 
-        FROM itens_pedido ip
-        JOIN produtos p ON p.id = ip.produto_id
-        WHERE ip.pedido_id = ?
-    ");
-    $stmtItens->execute([$pedido['id']]);
-    $itens = $stmtItens->fetchAll();
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    $nomesProdutos = array_map(function ($item) {
-        return htmlspecialchars($item['nome']) . " x" . $item['quantidade'];
-    }, $itens);
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/adm.css">
 
-    $produtosTexto = implode(', ', $nomesProdutos);
+</head>
 
-    // Badge do status
-    $badgeClass = match ($pedido['status']) {
-        'Pago' => 'success',
-        'Pendente' => 'warning',
-        'Cancelado' => 'danger',
-        'Embalando' => 'info',
-        'Enviado' => 'primary',
-        'Entregue' => 'dark',
-        default => 'secondary',
-    };
-    ?>
-    <!DOCTYPE html>
-    <html lang="pt-br">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Vendas | Kiluxo</title>
-
-        <!-- Bootstrap 5 CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Bootstrap Icons -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="../css/adm.css">
-
-    </head>
-
-    <body>
-        <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="../images/logo.png" class="navbar-logo">
-                </a>
-                <div class="d-flex align-items-center">
-                    <?php
-                    $nomeCompleto = $_SESSION['usuario_logado']['nome'];
-                    $partes = explode(' ', trim($nomeCompleto));
-                    $primeiro = $partes[0];
-                    $ultimo = end($partes);
-                    $nomeExibido = $primeiro . ' ' . $ultimo;
-                    ?>
-                    <div class="user-info me-3">
-                        <?= htmlspecialchars($nomeExibido) ?>
-                    </div>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="../images/logo.png" class="navbar-logo">
+            </a>
+            <div class="d-flex align-items-center">
+                <?php
+                $nomeCompleto = $_SESSION['usuario_logado']['nome'];
+                $partes = explode(' ', trim($nomeCompleto));
+                $primeiro = $partes[0];
+                $ultimo = end($partes);
+                $nomeExibido = $primeiro . ' ' . $ultimo;
+                ?>
+                <div class="user-info me-3">
+                    <?= htmlspecialchars($nomeExibido) ?>
                 </div>
             </div>
-        </nav>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" href="dashboard.php"><i
-                            class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
-                <li class="nav-item"><a class="nav-link active" href="vendas.php"><i
-                            class="bi bi-cart4"></i><span>Vendas</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="produtos.php"><i
-                            class="bi bi-box-seam"></i><span>Produtos</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="usuarios.php"><i
-                            class="bi bi-people"></i><span>Usuários</span></a></li>
-                <div class="divider"></div>
-                <li class="nav-item"><a class="nav-link" href="../vendor/php/logout.php"><i
-                            class="bi bi-box-arrow-right"></i><span>Sair</span></a></li>
-            </ul>
         </div>
+    </nav>
 
-        <!-- Main Content -->
-        <div class="main-content mt-5">
-            <div class="data-table">
-                <div class="table-header d-flex justify-content-between align-items-center">
-                    <h3 class="table-title">Histórico de Vendas</h3>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link" href="dashboard.php"><i
+                        class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a class="nav-link active" href="vendas.php"><i
+                        class="bi bi-cart4"></i><span>Vendas</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="produtos.php"><i
+                        class="bi bi-box-seam"></i><span>Produtos</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="usuarios.php"><i
+                        class="bi bi-people"></i><span>Usuários</span></a></li>
+            <div class="divider"></div>
+            <li class="nav-item"><a class="nav-link" href="../vendor/php/logout.php"><i
+                        class="bi bi-box-arrow-right"></i><span>Sair</span></a></li>
+        </ul>
+    </div>
 
-                </div>
+    <!-- Main Content -->
+    <div class="main-content mt-5">
+        <div class="data-table">
+            <div class="table-header d-flex justify-content-between align-items-center">
+                <h3 class="table-title">Histórico de Vendas</h3>
 
-                <div class="table-responsive">
-                    <table class="table table-striped align-middle">
-                        <thead>
-                            <tr>
-                                <th># Venda</th>
-                                <th>Cliente</th>
-                                <th>Data</th>
-                                <th>Produtos</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th># Venda</th>
+                            <th>Cliente</th>
+                            <th>Data</th>
+                            <th>Produtos</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <?php
+
+
+                    require_once '../vendor/php/conexao.php';
+
+                    $stmt = $pdo->query("SELECT * FROM pedidos ORDER BY criado_em DESC");
+                    $pedidos = $stmt->fetchAll();
+
+                    foreach ($pedidos as $pedido):
+                        // Buscar produtos desse pedido
+                        $stmtItens = $pdo->prepare("
+                            SELECT ip.*, p.nome 
+                            FROM itens_pedido ip
+                            JOIN produtos p ON p.id = ip.produto_id
+                            WHERE ip.pedido_id = ?
+                        ");
+                        $stmtItens->execute([$pedido['id']]);
+                        $itens = $stmtItens->fetchAll();
+
+                        $nomesProdutos = array_map(function ($item) {
+                            return htmlspecialchars($item['nome']) . " x" . $item['quantidade'];
+                        }, $itens);
+
+                        $produtosTexto = implode(', ', $nomesProdutos);
+
+                        // Badge do status
+                        $badgeClass = match ($pedido['status']) {
+                            'Pago' => 'success',
+                            'Pendente' => 'warning',
+                            'Cancelado' => 'danger',
+                            'Embalando' => 'info',
+                            'Enviado' => 'primary',
+                            'Entregue' => 'dark',
+                            default => 'secondary',
+                        };
+                        ?>
                         <tbody>
                             <tr>
                                 <td>#VND-<?= str_pad($pedido['id'], 4, '0', STR_PAD_LEFT) ?></td>
