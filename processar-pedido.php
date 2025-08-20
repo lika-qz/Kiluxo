@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensagem .= "*💰 Total: R$ " . number_format($total, 2, ',', '.') . "*";
 
   
-    $numeroWhatsApp = '559781083160';
+    $numeroWhatsApp = '5597999039654';
 
     // Encode da mensagem para URL
     $mensagemURL = urlencode($mensagem);
