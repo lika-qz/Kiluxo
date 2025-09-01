@@ -135,9 +135,6 @@ if(isset($_SESSION['usuario'])){
 			<div class="mb-3">
 				<input type="submit" class="btn btn-dark col-12" value="Entrar">
 			</div>
-			<div class="text-center mb-5">
-				<a href="cadastrar.php" style="text-decoration: none; color: black">Não tem cadastro? Clique aqui</a>
-			</div>
 		</form>
 		<?php
 		if(isset($_POST['email'], $_POST['senha'])){
